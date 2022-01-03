@@ -1,4 +1,4 @@
-package nospring.service.skeleton.app.servlet;
+package pets.database.app.servlet;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

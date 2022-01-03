@@ -1,4 +1,4 @@
-package nospring.service.skeleton.app.filter;
+package pets.database.app.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -10,15 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import nospring.service.skeleton.app.util.Util;
+import pets.database.app.util.Util;
+
 import java.util.List;
 
 @Slf4j
 public class ServletFilter implements Filter {
 
-    private static final List<String> DO_NOT_FILTER = List.of(
-            Util.CONTEXT_PATH + "/tests/ping",
-            Util.CONTEXT_PATH + "/tests/reset");
+    private static final List<String> DO_NOT_FILTER = List.of(Util.CONTEXT_PATH + "/tests/ping");
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
