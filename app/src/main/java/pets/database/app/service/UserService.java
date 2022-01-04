@@ -137,7 +137,7 @@ public class UserService {
                     Updates.set("phone", userRequest.getPhone()),
                     Updates.set("email", userRequest.getEmail()),
                     Updates.set("status", userRequest.getStatus()),
-                    Updates.currentTimestamp("last_modified")));
+                    Updates.set("lastModified", LocalDateTime.now().toString())));
 
             long modifiedCount = UserDao.updateUserById(filter, updates);
 

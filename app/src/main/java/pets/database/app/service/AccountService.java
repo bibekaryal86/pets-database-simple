@@ -165,7 +165,7 @@ public class AccountService {
                     Updates.set("description", accountRequest.getDescription()),
                     Updates.set("openingBalance", accountRequest.getOpeningBalance()),
                     Updates.set("status", accountRequest.getStatus()),
-                    Updates.currentTimestamp("last_modified")));
+                    Updates.set("lastModified", LocalDateTime.now().toString())));
 
             long modifiedCount = AccountDao.updateAccountById(filter, updates);
 

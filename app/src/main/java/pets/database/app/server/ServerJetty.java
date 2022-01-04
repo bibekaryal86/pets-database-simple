@@ -17,8 +17,6 @@ import java.util.EnumSet;
 public class ServerJetty {
 
     public void start() throws Exception {
-        log.info("Start Jetty Server Initialization!!!");
-
         QueuedThreadPool threadPool = new QueuedThreadPool(Util.SERVER_MAX_THREADS, Util.SERVER_MIN_THREADS, Util.SERVER_IDLE_TIMEOUT);
         Server server = new Server(threadPool);
 
@@ -30,7 +28,6 @@ public class ServerJetty {
 
         server.setHandler(getServletHandler());
         server.start();
-        log.info("Finish Jetty Server Initialization!!!");
     }
 
     private ServletHandler getServletHandler() {
@@ -60,6 +57,11 @@ public class ServerJetty {
         servletHandler.addServletWithMapping(AccountServletC.class, Util.CONTEXT_PATH + "/accounts/account");
         servletHandler.addServletWithMapping(AccountServletR.class, Util.CONTEXT_PATH + "/accounts/account/user/*");
         servletHandler.addServletWithMapping(AccountServletUD.class, Util.CONTEXT_PATH + "/accounts/account/id/*");
+
+        // Transaction CRUD (UD also has an R)
+        servletHandler.addServletWithMapping(TransactionServletC.class, Util.CONTEXT_PATH + "/transactions/transaction");
+        servletHandler.addServletWithMapping(TransactionServletR.class, Util.CONTEXT_PATH + "/transactions/transaction/user/*");
+        servletHandler.addServletWithMapping(TransactionServletUD.class, Util.CONTEXT_PATH + "/transactions/transaction/id/*");
 
         return servletHandler;
     }

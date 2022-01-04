@@ -4,25 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction implements Serializable {
-    private String id;
+public class TransactionDto implements Serializable {
+    @BsonId
+    private ObjectId id;
     private String description;
-    private Account account;
-    private Account trfAccount;
-    private RefTransactionType refTransactionType;
-    private RefCategory refCategory;
-    private RefMerchant refMerchant;
-    private User user;
+    private AccountDto account;
+    private AccountDto trfAccount;
+    private RefTransactionTypeDto refTransactionType;
+    private RefCategoryDto refCategory;
+    private RefMerchantDto refMerchant;
+    private UserDto user;
     private String date;
-    private BigDecimal amount;
+    private String amount;
     private Boolean regular;
     private Boolean necessary;
     private String creationDate;

@@ -144,7 +144,7 @@ public class RefMerchantService {
             Bson filter = Filters.eq("_id", new ObjectId(id));
             Bson updates = Updates.combine(List.of(
                     Updates.set("description", refMerchantRequest.getDescription()),
-                    Updates.currentTimestamp("last_modified")));
+                    Updates.set("lastModified", LocalDateTime.now().toString())));
 
             long modifiedCount = RefMerchantDao.updateRefMerchantById(filter, updates);
 

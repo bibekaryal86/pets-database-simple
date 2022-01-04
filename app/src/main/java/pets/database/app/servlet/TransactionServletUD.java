@@ -3,19 +3,19 @@ package pets.database.app.servlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pets.database.app.model.AccountRequest;
-import pets.database.app.model.AccountResponse;
 import pets.database.app.model.Status;
-import pets.database.app.service.AccountService;
+import pets.database.app.model.TransactionRequest;
+import pets.database.app.model.TransactionResponse;
+import pets.database.app.service.TransactionService;
 import pets.database.app.util.Util;
 
 import java.io.IOException;
 
-public class AccountServletUD extends HttpServlet {
+public class TransactionServletUD extends HttpServlet {
 
     private void doGetPutAndDelete(HttpServletRequest request, HttpServletResponse response,
                                    boolean isGet, boolean isDelete) throws IOException {
-        AccountResponse accountResponse;
+        TransactionResponse transactionResponse;
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
@@ -23,38 +23,38 @@ public class AccountServletUD extends HttpServlet {
 
         if (Util.hasText(id)) {
             if (isGet) {
-                accountResponse = AccountService.getAccountById(id);
+                transactionResponse = TransactionService.getTransactionById(id);
             } else if (isDelete) {
-                accountResponse = AccountService.deleteAccountById(id);
+                transactionResponse = TransactionService.deleteTransactionById(id);
             } else {
-                AccountRequest accountRequest = (AccountRequest) Util.getRequestBody(request, AccountRequest.class);
+                TransactionRequest transactionRequest = (TransactionRequest) Util.getRequestBody(request, TransactionRequest.class);
 
-                if (accountRequest == null) {
-                    accountResponse = AccountResponse.builder()
+                if (transactionRequest == null) {
+                    transactionResponse = TransactionResponse.builder()
                             .status(Status.builder()
-                                    .errMsg("Error Updating Account! Invalid Request!! Please Try Again!!!")
+                                    .errMsg("Error Updating Transaction! Invalid Request!! Please Try Again!!!")
                                     .build())
                             .build();
                 } else {
-                    accountResponse = AccountService.updateAccountById(id, accountRequest);
+                    transactionResponse = TransactionService.updateTransactionById(id, transactionRequest);
                 }
             }
 
-            if (accountResponse.getStatus() == null) {
+            if (transactionResponse.getStatus() == null) {
                 response.setStatus(200);
             } else {
                 response.setStatus(500);
             }
         } else {
             response.setStatus(400);
-            accountResponse = AccountResponse.builder()
+            transactionResponse = TransactionResponse.builder()
                     .status(Status.builder()
-                            .errMsg("Error Updating Account! Invalid Id!! Please Try Again!!!")
+                            .errMsg("Error Updating Transaction! Invalid Id!! Please Try Again!!!")
                             .build())
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(accountResponse));
+        response.getWriter().print(Util.getGson().toJson(transactionResponse));
     }
 
     @Override
