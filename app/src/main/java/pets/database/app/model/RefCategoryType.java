@@ -13,7 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RefCategoryType implements Serializable {
-    @BsonId
     private String id;
     private String description;
     private String creationDate;

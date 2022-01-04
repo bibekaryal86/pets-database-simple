@@ -5,7 +5,6 @@ import com.mongodb.client.model.Updates;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pets.database.app.model.*;
@@ -26,6 +25,39 @@ public class UserService {
     private static final String ERROR_UPDATING_USER = "Error Updating User, Please Try Again!!!";
     private static final String ERROR_DELETING_USER = "Error Deleting User, Please Try Again!!!";
 
+    private static User convertDtoToObject(UserDto userDto) {
+        return User.builder()
+                .id(userDto.getId() == null ? null : userDto.getId().toString())
+                .username(userDto.getUsername())
+                .password(userDto.getPassword())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .streetAddress(userDto.getStreetAddress())
+                .city(userDto.getCity())
+                .state(userDto.getState())
+                .zipcode(userDto.getZipcode())
+                .email(userDto.getEmail())
+                .phone(userDto.getPhone())
+                .status(userDto.getStatus())
+                .build();
+    }
+
+    private static UserDto convertObjectToDto(UserRequest userRequest) {
+        return UserDto.builder()
+                .username(userRequest.getUsername())
+                .password(userRequest.getPassword())
+                .firstName(userRequest.getFirstName())
+                .lastName(userRequest.getLastName())
+                .streetAddress(userRequest.getStreetAddress())
+                .city(userRequest.getCity())
+                .state(userRequest.getState())
+                .zipcode(userRequest.getZipcode())
+                .email(userRequest.getEmail())
+                .phone(userRequest.getPhone())
+                .status(userRequest.getStatus())
+                .build();
+    }
+
     public static UserResponse getUserByUsername(String username) {
         log.info("Before Get User By User Name: {}", username);
         User user = null;
@@ -35,8 +67,7 @@ public class UserService {
             UserDto userDto = UserDao.findUserByUsername(username);
 
             if (userDto != null) {
-                user = User.builder().build();
-                BeanUtils.copyProperties(user, userDto);
+                user = convertDtoToObject(userDto);
             }
         } catch (Exception ex) {
             log.error("Get User By User Name: {}", username, ex);
@@ -59,15 +90,13 @@ public class UserService {
         Status status = null;
 
         try {
-            UserDto userDto = UserDto.builder().build();
-            BeanUtils.copyProperties(userDto, userRequest);
+            UserDto userDto = convertObjectToDto(userRequest);
             userDto.setCreationDate(LocalDate.now().toString());
             userDto.setLastModified(LocalDateTime.now().toString());
 
             String insertedId = UserDao.saveNewUser(userDto);
             if (Util.hasText(insertedId)) {
-                user = User.builder().build();
-                BeanUtils.copyProperties(user, userDto);
+                user = convertDtoToObject(userDto);
                 user.setId(insertedId);
             } else {
                 status = Status.builder()
