@@ -21,9 +21,15 @@ public class Util {
     public static final String TIME_ZONE = "TZ";
     public static final String BASIC_AUTH_USR = "BASIC_AUTH_USR";
     public static final String BASIC_AUTH_PWD = "BASIC_AUTH_PWD";
+    public static final String MONGODB_ACC_NAME = "MONGODB_ACC_NAME";
+    public static final String MONGODB_USR_NAME = "MONGODB_USR_NAME";
+    public static final String MONGODB_USR_PWD = "MONGODB_USR_PWD";
 
     // server context-path
     public static final String CONTEXT_PATH = "/pets-database";     // NOSONAR
+
+    // mongodb connection string
+    public static final String MONGODB_URI = "mongodb+srv://%s:%s@bibekaryal86.lwcmb.mongodb.net/%s?retryWrites=true&w=majority";
 
     // others
     public static final int SERVER_MAX_THREADS = 100;
@@ -60,5 +66,21 @@ public class Util {
         String authorization = Base64.getEncoder().encodeToString(String.format("%s:%s", username, password).getBytes());
         String headerAuth = request.getHeader("Authorization");
         return hasText(headerAuth) && headerAuth.equals(String.format("Basic %s", authorization));
+    }
+
+    public static String getRequestPathParameter(HttpServletRequest request) {
+        String[] requestUriArray = request.getRequestURI().split("/");
+        if (requestUriArray.length == 6 && hasText(requestUriArray[5])) {
+            return requestUriArray[5];
+        }
+        return null;
+    }
+
+    public static Object getRequestBody(HttpServletRequest request, Class<?> clazz) {
+        try {
+            return getGson().fromJson(request.getReader(), clazz);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

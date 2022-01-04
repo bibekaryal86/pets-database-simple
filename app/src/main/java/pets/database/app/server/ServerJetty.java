@@ -8,6 +8,9 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import pets.database.app.filter.ServletFilter;
+import pets.database.app.servlet.UserServletC;
+import pets.database.app.servlet.UserServletR;
+import pets.database.app.servlet.UserServletUD;
 import pets.database.app.util.Util;
 import pets.database.app.servlet.AppPing;
 
@@ -38,6 +41,11 @@ public class ServerJetty {
         servletHandler.addFilterWithMapping(ServletFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 
         servletHandler.addServletWithMapping(AppPing.class, Util.CONTEXT_PATH + "/tests/ping");
+
+        // User CRUD
+        servletHandler.addServletWithMapping(UserServletC.class, Util.CONTEXT_PATH + "/users/user");
+        servletHandler.addServletWithMapping(UserServletR.class, Util.CONTEXT_PATH + "/users/user/username/*");
+        servletHandler.addServletWithMapping(UserServletUD.class, Util.CONTEXT_PATH + "/users/user/id/*");
 
         return servletHandler;
     }
