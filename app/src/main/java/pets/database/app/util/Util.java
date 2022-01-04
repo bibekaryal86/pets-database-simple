@@ -54,6 +54,7 @@ public class Util {
                     public boolean shouldSkipField(FieldAttributes f) {
                         return (f == null);
                     }
+
                     public boolean shouldSkipClass(Class<?> clazz) {
                         return false;
                     }

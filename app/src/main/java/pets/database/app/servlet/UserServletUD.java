@@ -56,7 +56,7 @@ public class UserServletUD extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-       doPutAndDelete(request, response, false);
+        doPutAndDelete(request, response, false);
     }
 
     @Override

@@ -21,6 +21,7 @@ import java.util.Objects;
 public class RefMerchantDao {
 
     private static final String REF_MERCHANT_DETAILS = "ref_merchant_details";
+
     private static MongoCollection<RefMerchantDto> getMongoCollection(MongoClient mongoClient) {
         return (MongoCollection<RefMerchantDto>) MongoDbUtil.getMongoCollection(mongoClient, REF_MERCHANT_DETAILS, RefMerchantDto.class);
     }
@@ -30,7 +31,7 @@ public class RefMerchantDao {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             FindIterable<RefMerchantDto> findIterable = getMongoCollection(mongoClient)
                     .find(Filters.eq("user.username", username))
-                            .sort(Sorts.ascending("description"));
+                    .sort(Sorts.ascending("description"));
             findIterable.forEach(refMerchantDtoList::add);
         }
         return refMerchantDtoList;

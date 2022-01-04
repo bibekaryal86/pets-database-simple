@@ -17,9 +17,9 @@ public class RefTypesDao {
 
     private static final String REF_ACCOUNT_TYPE_DETAILS = "ref_account_type_details";
     private static final String REF_BANK_DETAILS = "ref_bank_details";
-    public static final String REF_CATEGORY_TYPE_DETAILS = "ref_category_type_details";
-    public static final String REF_CATEGORY_DETAILS = "ref_category_details";
-    public static final String REF_TRANSACTION_TYPE_DETAILS = "ref_transaction_type_details";
+    private static final String REF_CATEGORY_TYPE_DETAILS = "ref_category_type_details";
+    private static final String REF_CATEGORY_DETAILS = "ref_category_details";
+    private static final String REF_TRANSACTION_TYPE_DETAILS = "ref_transaction_type_details";
 
     public static List<RefAccountTypeDto> getAllRefAccountTypes() {
         List<RefAccountTypeDto> accountTypeDtoList = new ArrayList<>();

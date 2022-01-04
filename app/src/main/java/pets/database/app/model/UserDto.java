@@ -15,7 +15,8 @@ public class UserDto implements Serializable {
     @BsonId
     private ObjectId id;
     private String username;
-    @ToString.Exclude private String password;
+    @ToString.Exclude
+    private String password;
     @BsonProperty(value = "first_name")
     private String firstName;
     @BsonProperty(value = "last_name")

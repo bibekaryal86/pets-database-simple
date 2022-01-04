@@ -3,7 +3,9 @@ package pets.database.app.servlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pets.database.app.model.*;
+import pets.database.app.model.RefMerchantRequest;
+import pets.database.app.model.RefMerchantResponse;
+import pets.database.app.model.Status;
 import pets.database.app.service.RefMerchantService;
 import pets.database.app.util.Util;
 

@@ -11,7 +11,8 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String id;
     private String username;
-    @ToString.Exclude private String password;
+    @ToString.Exclude
+    private String password;
     private String firstName;
     private String lastName;
     private String streetAddress;

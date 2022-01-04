@@ -12,7 +12,8 @@ public class UserRequest implements Serializable {
     @NonNull
     private String username;
     @NonNull
-    @ToString.Exclude private String password;
+    @ToString.Exclude
+    private String password;
     @NonNull
     private String firstName;
     @NonNull

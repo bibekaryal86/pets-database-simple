@@ -21,6 +21,7 @@ import java.util.Objects;
 public class AccountDao {
 
     private static final String ACCOUNT_DETAILS = "account_details";
+
     private static MongoCollection<AccountDto> getMongoCollection(MongoClient mongoClient) {
         return (MongoCollection<AccountDto>) MongoDbUtil.getMongoCollection(mongoClient, ACCOUNT_DETAILS, AccountDto.class);
     }
@@ -30,7 +31,7 @@ public class AccountDao {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             FindIterable<AccountDto> findIterable = getMongoCollection(mongoClient)
                     .find(Filters.eq("user.username", username))
-                            .sort(Sorts.ascending("description"));
+                    .sort(Sorts.ascending("description"));
             findIterable.forEach(accountDtoList::add);
         }
         return accountDtoList;

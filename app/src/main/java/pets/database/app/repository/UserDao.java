@@ -1,6 +1,7 @@
 package pets.database.app.repository;
 
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import lombok.AccessLevel;
@@ -11,12 +12,11 @@ import pets.database.app.util.MongoDbUtil;
 
 import java.util.Objects;
 
-import com.mongodb.client.MongoClients;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDao {
 
     private static final String USER_DETAILS = "user_details";
+
     private static MongoCollection<UserDto> getMongoCollection(MongoClient mongoClient) {
         return (MongoCollection<UserDto>) MongoDbUtil.getMongoCollection(mongoClient, USER_DETAILS, UserDto.class);
     }
