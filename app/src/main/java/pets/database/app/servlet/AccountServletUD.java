@@ -49,7 +49,7 @@ public class AccountServletUD extends HttpServlet {
             response.setStatus(400);
             accountResponse = AccountResponse.builder()
                     .status(Status.builder()
-                            .errMsg("Error Updating Account! Invalid Id!! Please Try Again!!!")
+                            .errMsg("Error Processing Request! Invalid Id!! Please Try Again!!!")
                             .build())
                     .build();
         }

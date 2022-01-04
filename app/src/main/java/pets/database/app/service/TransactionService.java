@@ -270,4 +270,28 @@ public class TransactionService {
                 .status(status)
                 .build();
     }
+
+    public static TransactionResponse deleteTransactionByAccountId(String id) {
+        log.info("Before Delete Transaction By Account Id: {}", id);
+        long deleteCount = 0;
+        Status status = null;
+
+        try {
+            Bson filter = Filters.eq("account._id", new ObjectId(id));
+            deleteCount = TransactionDao.deleteTransactionByAccountId(filter);
+        } catch (Exception ex) {
+            log.error("Delete Transaction By Account Id: {}", id, ex);
+            status = Status.builder()
+                    .errMsg(ERROR_DELETING_TRANSACTION)
+                    .message(ex.toString())
+                    .build();
+        }
+
+        log.info("After Delete Transaction By Account Id: {} | deleteCount: {}", id, deleteCount);
+        return TransactionResponse.builder()
+                .transactions(Collections.emptyList())
+                .deleteCount(deleteCount)
+                .status(status)
+                .build();
+    }
 }

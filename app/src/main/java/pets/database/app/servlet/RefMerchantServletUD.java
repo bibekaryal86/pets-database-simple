@@ -49,7 +49,7 @@ public class RefMerchantServletUD extends HttpServlet {
             response.setStatus(400);
             refMerchantResponse = RefMerchantResponse.builder()
                     .status(Status.builder()
-                            .errMsg("Error Updating Ref Merchant! Invalid Id!! Please Try Again!!!")
+                            .errMsg("Error Processing Request! Invalid Id!! Please Try Again!!!")
                             .build())
                     .build();
         }

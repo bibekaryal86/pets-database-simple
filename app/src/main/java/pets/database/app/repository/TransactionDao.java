@@ -61,4 +61,10 @@ public class TransactionDao {
             return getMongoCollection(mongoClient).deleteOne(filter).getDeletedCount();
         }
     }
+
+    public static long deleteTransactionByAccountId(Bson filter) {
+        try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
+            return getMongoCollection(mongoClient).deleteMany(filter).getDeletedCount();
+        }
+    }
 }

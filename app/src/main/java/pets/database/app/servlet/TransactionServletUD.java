@@ -49,7 +49,7 @@ public class TransactionServletUD extends HttpServlet {
             response.setStatus(400);
             transactionResponse = TransactionResponse.builder()
                     .status(Status.builder()
-                            .errMsg("Error Updating Transaction! Invalid Id!! Please Try Again!!!")
+                            .errMsg("Error Processing Request! Invalid Id!! Please Try Again!!!")
                             .build())
                     .build();
         }

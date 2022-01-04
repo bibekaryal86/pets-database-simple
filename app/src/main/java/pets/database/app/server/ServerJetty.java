@@ -60,6 +60,8 @@ public class ServerJetty {
         servletHandler.addServletWithMapping(TransactionServletC.class, Util.CONTEXT_PATH + "/transactions/transaction");
         servletHandler.addServletWithMapping(TransactionServletR.class, Util.CONTEXT_PATH + "/transactions/transaction/user/*");
         servletHandler.addServletWithMapping(TransactionServletUD.class, Util.CONTEXT_PATH + "/transactions/transaction/id/*");
+        // Transaction extra D
+        servletHandler.addServletWithMapping(TransactionServletD.class, Util.CONTEXT_PATH + "/transactions/transaction/accountid/*");
 
         return servletHandler;
     }
