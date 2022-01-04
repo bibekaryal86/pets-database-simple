@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import pets.database.app.model.RefMerchantDto;
+import pets.database.app.model.AccountDto;
 import pets.database.app.util.MongoDbUtil;
 
 import java.util.ArrayList;
@@ -18,44 +18,44 @@ import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RefMerchantDao {
+public class AccountDao {
 
-    private static final String REF_MERCHANT_DETAILS = "ref_merchant_details";
-    private static MongoCollection<RefMerchantDto> getMongoCollection(MongoClient mongoClient) {
-        return (MongoCollection<RefMerchantDto>) MongoDbUtil.getMongoCollection(mongoClient, REF_MERCHANT_DETAILS, RefMerchantDto.class);
+    private static final String ACCOUNT_DETAILS = "account_details";
+    private static MongoCollection<AccountDto> getMongoCollection(MongoClient mongoClient) {
+        return (MongoCollection<AccountDto>) MongoDbUtil.getMongoCollection(mongoClient, ACCOUNT_DETAILS, AccountDto.class);
     }
 
-    public static List<RefMerchantDto> getAllRefMerchantsByUsername(String username) {
-        List<RefMerchantDto> refMerchantDtoList = new ArrayList<>();
+    public static List<AccountDto> getAllAccountsByUsername(String username) {
+        List<AccountDto> accountDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
-            FindIterable<RefMerchantDto> findIterable = getMongoCollection(mongoClient)
+            FindIterable<AccountDto> findIterable = getMongoCollection(mongoClient)
                     .find(Filters.eq("user.username", username))
                             .sort(Sorts.ascending("description"));
-            findIterable.forEach(refMerchantDtoList::add);
+            findIterable.forEach(accountDtoList::add);
         }
-        return refMerchantDtoList;
+        return accountDtoList;
     }
 
-    public static RefMerchantDto getRefMerchantById(String id) {
+    public static AccountDto getAccountById(String id) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return getMongoCollection(mongoClient).find(Filters.eq("_id", new ObjectId(id))).first();
         }
     }
 
-    public static String saveNewRefMerchant(RefMerchantDto refMerchantDto) {
+    public static String saveNewAccount(AccountDto accountDto) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
-            return Objects.requireNonNull(getMongoCollection(mongoClient).insertOne(refMerchantDto).getInsertedId())
+            return Objects.requireNonNull(getMongoCollection(mongoClient).insertOne(accountDto).getInsertedId())
                     .asObjectId().getValue().toString();
         }
     }
 
-    public static long updateRefMerchantById(Bson filter, Bson updates) {
+    public static long updateAccountById(Bson filter, Bson updates) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return getMongoCollection(mongoClient).updateOne(filter, updates).getModifiedCount();
         }
     }
 
-    public static long deleteRefMerchantById(Bson filter) {
+    public static long deleteAccountById(Bson filter) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return getMongoCollection(mongoClient).deleteOne(filter).getDeletedCount();
         }

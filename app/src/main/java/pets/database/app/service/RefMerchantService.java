@@ -35,6 +35,8 @@ public class RefMerchantService {
                 .user(User.builder()
                         .username(refMerchantDto.getUser().getUsername())
                         .build())
+                .creationDate(refMerchantDto.getCreationDate())
+                .lastModified(refMerchantDto.getLastModified())
                 .build();
     }
 

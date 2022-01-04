@@ -20,6 +20,8 @@ public class RefTypesService {
         return RefAccountType.builder()
                 .id(refAccountTypeDto.getId().toString())
                 .description(refAccountTypeDto.getDescription())
+                .creationDate(refAccountTypeDto.getCreationDate())
+                .lastModified(refAccountTypeDto.getLastModified())
                 .build();
     }
 
@@ -27,6 +29,8 @@ public class RefTypesService {
         return RefBank.builder()
                 .id(refBankDto.getId().toString())
                 .description(refBankDto.getDescription())
+                .creationDate(refBankDto.getCreationDate())
+                .lastModified(refBankDto.getLastModified())
                 .build();
     }
 
@@ -34,6 +38,8 @@ public class RefTypesService {
         return RefCategoryType.builder()
                 .id(refCategoryTypeDto.getId().toString())
                 .description(refCategoryTypeDto.getDescription())
+                .creationDate(refCategoryTypeDto.getCreationDate())
+                .lastModified(refCategoryTypeDto.getLastModified())
                 .build();
     }
 
@@ -42,6 +48,8 @@ public class RefTypesService {
                 .id(refCategoryDto.getId().toString())
                 .description(refCategoryDto.getDescription())
                 .refCategoryType(convertDtoToObject(refCategoryDto.getRefCategoryType()))
+                .creationDate(refCategoryDto.getCreationDate())
+                .lastModified(refCategoryDto.getLastModified())
                 .build();
     }
 
@@ -49,6 +57,8 @@ public class RefTypesService {
         return RefTransactionType.builder()
                 .id(refTransactionTypeDto.getId().toString())
                 .description(refTransactionTypeDto.getDescription())
+                .creationDate(refTransactionTypeDto.getCreationDate())
+                .lastModified(refTransactionTypeDto.getLastModified())
                 .build();
     }
 

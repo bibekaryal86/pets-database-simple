@@ -39,6 +39,8 @@ public class UserService {
                 .email(userDto.getEmail())
                 .phone(userDto.getPhone())
                 .status(userDto.getStatus())
+                .creationDate(userDto.getCreationDate())
+                .lastModified(userDto.getLastModified())
                 .build();
     }
 

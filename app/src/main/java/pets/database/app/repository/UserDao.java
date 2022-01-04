@@ -29,7 +29,8 @@ public class UserDao {
 
     public static String saveNewUser(UserDto userDto) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
-            return Objects.requireNonNull(getMongoCollection(mongoClient).insertOne(userDto).getInsertedId()).asObjectId().getValue().toString();
+            return Objects.requireNonNull(getMongoCollection(mongoClient).insertOne(userDto).getInsertedId())
+                    .asObjectId().getValue().toString();
         }
     }
 
