@@ -1,7 +1,6 @@
 package pets.database.app.server;
 
 import jakarta.servlet.DispatcherType;
-import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -13,7 +12,6 @@ import pets.database.app.util.Util;
 
 import java.util.EnumSet;
 
-@Slf4j
 public class ServerJetty {
 
     public void start() throws Exception {
