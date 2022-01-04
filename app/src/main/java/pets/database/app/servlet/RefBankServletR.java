@@ -3,26 +3,26 @@ package pets.database.app.servlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pets.database.app.model.RefCategoryResponse;
+import pets.database.app.model.RefBankResponse;
 import pets.database.app.service.RefTypesService;
 import pets.database.app.util.Util;
 
 import java.io.IOException;
 
-public class RefCategoryR extends HttpServlet {
+public class RefBankServletR extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        RefCategoryResponse refCategoryResponse = RefTypesService.getAllRefCategories();
+        RefBankResponse refBankResponse = RefTypesService.getAllRefBanks();
 
-        if (refCategoryResponse.getStatus() == null) {
+        if (refBankResponse.getStatus() == null) {
             response.setStatus(200);
         } else {
             response.setStatus(500);
         }
 
-        response.getWriter().print(Util.getGson().toJson(refCategoryResponse));
+        response.getWriter().print(Util.getGson().toJson(refBankResponse));
     }
 }

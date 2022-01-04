@@ -9,7 +9,7 @@ import pets.database.app.util.Util;
 
 import java.io.IOException;
 
-public class RefCategoryTypeR extends HttpServlet {
+public class RefCategoryTypeServletR extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");

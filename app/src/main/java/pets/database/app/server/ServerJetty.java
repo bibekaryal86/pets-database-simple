@@ -40,11 +40,11 @@ public class ServerJetty {
         servletHandler.addServletWithMapping(UserServletUD.class, Util.CONTEXT_PATH + "/users/user/id/*");
 
         // Ref Types R
-        servletHandler.addServletWithMapping(RefAccountTypeR.class, Util.CONTEXT_PATH + "/refaccounttypes/refaccounttype");
-        servletHandler.addServletWithMapping(RefBankR.class, Util.CONTEXT_PATH + "/refbanks/refbank");
-        servletHandler.addServletWithMapping(RefCategoryR.class, Util.CONTEXT_PATH + "/refcategories/refcategory");
-        servletHandler.addServletWithMapping(RefCategoryTypeR.class, Util.CONTEXT_PATH + "/refcategorytypes/refcategorytype");
-        servletHandler.addServletWithMapping(RefTransactionTypeR.class, Util.CONTEXT_PATH + "/reftransactiontypes/reftransactiontype");
+        servletHandler.addServletWithMapping(RefAccountTypeServletR.class, Util.CONTEXT_PATH + "/refaccounttypes/refaccounttype");
+        servletHandler.addServletWithMapping(RefBankServletR.class, Util.CONTEXT_PATH + "/refbanks/refbank");
+        servletHandler.addServletWithMapping(RefCategoryServletR.class, Util.CONTEXT_PATH + "/refcategories/refcategory");
+        servletHandler.addServletWithMapping(RefCategoryTypeServletR.class, Util.CONTEXT_PATH + "/refcategorytypes/refcategorytype");
+        servletHandler.addServletWithMapping(RefTransactionTypeServletR.class, Util.CONTEXT_PATH + "/reftransactiontypes/reftransactiontype");
 
         // Ref Merchant CRUD (UD also has an R)
         servletHandler.addServletWithMapping(RefMerchantServletC.class, Util.CONTEXT_PATH + "/refmerchants/refmerchant");
