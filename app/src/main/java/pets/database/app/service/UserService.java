@@ -65,7 +65,6 @@ public class UserService {
 
         try {
             UserDto userDto = UserDao.findUserByUsername(username);
-
             if (userDto != null) {
                 user = convertDtoToObject(userDto);
             }

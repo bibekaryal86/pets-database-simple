@@ -51,6 +51,11 @@ public class ServerJetty {
         servletHandler.addServletWithMapping(RefCategoryTypeR.class, Util.CONTEXT_PATH + "/refcategorytypes/refcategorytype");
         servletHandler.addServletWithMapping(RefTransactionTypeR.class, Util.CONTEXT_PATH + "/reftransactiontypes/reftransactiontype");
 
+        // Ref Merchant CRUD (UD also has an R)
+        servletHandler.addServletWithMapping(RefMerchantServletC.class, Util.CONTEXT_PATH + "/refmerchants/refmerchant");
+        servletHandler.addServletWithMapping(RefMerchantServletR.class, Util.CONTEXT_PATH + "/refmerchants/refmerchant/user/*");
+        servletHandler.addServletWithMapping(RefMerchantServletUD.class, Util.CONTEXT_PATH + "/refmerchants/refmerchant/id/*");
+
         return servletHandler;
     }
 }

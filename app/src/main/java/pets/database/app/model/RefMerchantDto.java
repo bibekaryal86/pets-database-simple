@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
 import java.io.Serializable;
 
@@ -12,10 +13,11 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RefMerchant implements Serializable {
-    private String id;
+public class RefMerchantDto implements Serializable {
+    @BsonId
+    private ObjectId id;
     private String description;
-    private User user;
+    private UserDto user;
     private Boolean usedInUserTransaction;
     private String creationDate;
     private String lastModified;
