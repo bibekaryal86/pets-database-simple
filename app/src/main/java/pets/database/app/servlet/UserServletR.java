@@ -21,7 +21,7 @@ public class UserServletR extends HttpServlet {
         String usernameHeader = request.getHeader("user-header");
 
         if (Util.hasText(username) && Util.hasText(usernameHeader) && username.equals(usernameHeader)) {
-            userResponse = UserService.getUserByUsername(username);
+            userResponse = new UserService().getUserByUsername(username);
 
             if (userResponse.getStatus() == null) {
                 response.setStatus(200);

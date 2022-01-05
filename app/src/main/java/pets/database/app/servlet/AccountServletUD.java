@@ -23,9 +23,9 @@ public class AccountServletUD extends HttpServlet {
 
         if (Util.hasText(id)) {
             if (isGet) {
-                accountResponse = AccountService.getAccountById(id);
+                accountResponse = new AccountService().getAccountById(id);
             } else if (isDelete) {
-                accountResponse = AccountService.deleteAccountById(id);
+                accountResponse = new AccountService().deleteAccountById(id);
             } else {
                 AccountRequest accountRequest = (AccountRequest) Util.getRequestBody(request, AccountRequest.class);
 
@@ -36,7 +36,7 @@ public class AccountServletUD extends HttpServlet {
                                     .build())
                             .build();
                 } else {
-                    accountResponse = AccountService.updateAccountById(id, accountRequest);
+                    accountResponse = new AccountService().updateAccountById(id, accountRequest);
                 }
             }
 

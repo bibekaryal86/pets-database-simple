@@ -2,8 +2,6 @@ package pets.database.app.service;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -17,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserService {
 
     private static final String ERROR_RETRIEVING_USER = "Error Retrieving User, Please Try Again!!!";
@@ -25,7 +22,7 @@ public class UserService {
     private static final String ERROR_UPDATING_USER = "Error Updating User, Please Try Again!!!";
     private static final String ERROR_DELETING_USER = "Error Deleting User, Please Try Again!!!";
 
-    private static User convertDtoToObject(UserDto userDto) {
+    private User convertDtoToObject(UserDto userDto) {
         return User.builder()
                 .id(userDto.getId() == null ? null : userDto.getId().toString())
                 .username(userDto.getUsername())
@@ -44,7 +41,7 @@ public class UserService {
                 .build();
     }
 
-    private static UserDto convertObjectToDto(UserRequest userRequest) {
+    private UserDto convertObjectToDto(UserRequest userRequest) {
         return UserDto.builder()
                 .username(userRequest.getUsername())
                 .password(userRequest.getPassword())
@@ -60,13 +57,13 @@ public class UserService {
                 .build();
     }
 
-    public static UserResponse getUserByUsername(String username) {
+    public UserResponse getUserByUsername(String username) {
         log.info("Before Get User By User Name: {}", username);
         User user = null;
         Status status = null;
 
         try {
-            UserDto userDto = UserDao.findUserByUsername(username);
+            UserDto userDto = new UserDao().findUserByUsername(username);
             if (userDto != null) {
                 user = convertDtoToObject(userDto);
             }
@@ -85,7 +82,7 @@ public class UserService {
                 .build();
     }
 
-    public static UserResponse saveNewUser(UserRequest userRequest) {
+    public UserResponse saveNewUser(UserRequest userRequest) {
         log.info("Before Save New User: {}", userRequest);
         User user = null;
         Status status = null;
@@ -95,7 +92,7 @@ public class UserService {
             userDto.setCreationDate(LocalDate.now().toString());
             userDto.setLastModified(LocalDateTime.now().toString());
 
-            String insertedId = UserDao.saveNewUser(userDto);
+            String insertedId = new UserDao().saveNewUser(userDto);
             if (Util.hasText(insertedId)) {
                 user = convertDtoToObject(userDto);
                 user.setId(insertedId);
@@ -119,7 +116,7 @@ public class UserService {
                 .build();
     }
 
-    public static UserResponse updateUserById(String id, UserRequest userRequest) {
+    public UserResponse updateUserById(String id, UserRequest userRequest) {
         log.info("Before Update User By Id: {} | {}", id, userRequest);
         UserResponse userResponse;
         Status status;
@@ -139,7 +136,7 @@ public class UserService {
                     Updates.set("status", userRequest.getStatus()),
                     Updates.set("lastModified", LocalDateTime.now().toString())));
 
-            long modifiedCount = UserDao.updateUserById(filter, updates);
+            long modifiedCount = new UserDao().updateUserById(filter, updates);
 
             if (modifiedCount > 0) {
                 userResponse = getUserByUsername(userRequest.getUsername());
@@ -168,14 +165,14 @@ public class UserService {
         return userResponse;
     }
 
-    public static UserResponse deleteUserById(String id) {
+    public UserResponse deleteUserById(String id) {
         log.info("Before Delete User By Id: {}", id);
         long deleteCount = 0;
         Status status = null;
 
         try {
             Bson filter = Filters.eq("_id", new ObjectId(id));
-            deleteCount = UserDao.deleteUserById(filter);
+            deleteCount = new UserDao().deleteUserById(filter);
         } catch (Exception ex) {
             log.error("Delete User By Id: {}", id, ex);
             status = Status.builder()

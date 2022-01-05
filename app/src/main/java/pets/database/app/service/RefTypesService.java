@@ -1,7 +1,5 @@
 package pets.database.app.service;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pets.database.app.model.*;
 import pets.database.app.repository.RefTypesDao;
@@ -13,10 +11,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RefTypesService {
 
-    private static RefAccountType convertDtoToObject(RefAccountTypeDto refAccountTypeDto) {
+    private RefAccountType convertDtoToObject(RefAccountTypeDto refAccountTypeDto) {
         return RefAccountType.builder()
                 .id(refAccountTypeDto.getId().toString())
                 .description(refAccountTypeDto.getDescription())
@@ -25,7 +22,7 @@ public class RefTypesService {
                 .build();
     }
 
-    private static RefBank convertDtoToObject(RefBankDto refBankDto) {
+    private RefBank convertDtoToObject(RefBankDto refBankDto) {
         return RefBank.builder()
                 .id(refBankDto.getId().toString())
                 .description(refBankDto.getDescription())
@@ -34,7 +31,7 @@ public class RefTypesService {
                 .build();
     }
 
-    private static RefCategoryType convertDtoToObject(RefCategoryTypeDto refCategoryTypeDto) {
+    private RefCategoryType convertDtoToObject(RefCategoryTypeDto refCategoryTypeDto) {
         return RefCategoryType.builder()
                 .id(refCategoryTypeDto.getId().toString())
                 .description(refCategoryTypeDto.getDescription())
@@ -43,7 +40,7 @@ public class RefTypesService {
                 .build();
     }
 
-    private static RefCategory convertDtoToObject(RefCategoryDto refCategoryDto) {
+    private RefCategory convertDtoToObject(RefCategoryDto refCategoryDto) {
         return RefCategory.builder()
                 .id(refCategoryDto.getId().toString())
                 .description(refCategoryDto.getDescription())
@@ -53,7 +50,7 @@ public class RefTypesService {
                 .build();
     }
 
-    private static RefTransactionType convertDtoToObject(RefTransactionTypeDto refTransactionTypeDto) {
+    private RefTransactionType convertDtoToObject(RefTransactionTypeDto refTransactionTypeDto) {
         return RefTransactionType.builder()
                 .id(refTransactionTypeDto.getId().toString())
                 .description(refTransactionTypeDto.getDescription())
@@ -62,15 +59,15 @@ public class RefTypesService {
                 .build();
     }
 
-    public static RefAccountTypeResponse getAllRefAccountTypes() {
+    public RefAccountTypeResponse getAllRefAccountTypes() {
         log.info("Before Get All Ref Account Types");
         List<RefAccountType> refAccountTypes = new ArrayList<>();
         Status status = null;
 
         try {
-            List<RefAccountTypeDto> accountTypeDtoList = RefTypesDao.getAllRefAccountTypes();
+            List<RefAccountTypeDto> accountTypeDtoList = new RefTypesDao().getAllRefAccountTypes();
             refAccountTypes = accountTypeDtoList.stream()
-                    .map(RefTypesService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(ref -> Util.hasText(ref.getId()))
                     .collect(Collectors.toList());
@@ -89,15 +86,15 @@ public class RefTypesService {
                 .build();
     }
 
-    public static RefBankResponse getAllRefBanks() {
+    public RefBankResponse getAllRefBanks() {
         log.info("Before Get All Ref Banks");
         List<RefBank> refBanks = new ArrayList<>();
         Status status = null;
 
         try {
-            List<RefBankDto> refBankDtoList = RefTypesDao.getAllRefBanks();
+            List<RefBankDto> refBankDtoList = new RefTypesDao().getAllRefBanks();
             refBanks = refBankDtoList.stream()
-                    .map(RefTypesService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(ref -> Util.hasText(ref.getId()))
                     .collect(Collectors.toList());
@@ -116,15 +113,15 @@ public class RefTypesService {
                 .build();
     }
 
-    public static RefCategoryTypeResponse getAllRefCategoryTypes() {
+    public RefCategoryTypeResponse getAllRefCategoryTypes() {
         log.info("Before Get All Ref Category Types");
         List<RefCategoryType> refCategoryTypes = new ArrayList<>();
         Status status = null;
 
         try {
-            List<RefCategoryTypeDto> refCategoryTypeDtoList = RefTypesDao.getAllRefCategoryTypes();
+            List<RefCategoryTypeDto> refCategoryTypeDtoList = new RefTypesDao().getAllRefCategoryTypes();
             refCategoryTypes = refCategoryTypeDtoList.stream()
-                    .map(RefTypesService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(ref -> Util.hasText(ref.getId()))
                     .collect(Collectors.toList());
@@ -143,15 +140,15 @@ public class RefTypesService {
                 .build();
     }
 
-    public static RefCategoryResponse getAllRefCategories() {
+    public RefCategoryResponse getAllRefCategories() {
         log.info("Before Get All Ref Categories");
         List<RefCategory> refCategories = new ArrayList<>();
         Status status = null;
 
         try {
-            List<RefCategoryDto> refCategoryDtoList = RefTypesDao.getAllRefCategories();
+            List<RefCategoryDto> refCategoryDtoList = new RefTypesDao().getAllRefCategories();
             refCategories = refCategoryDtoList.stream()
-                    .map(RefTypesService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(ref -> Util.hasText(ref.getId()))
                     .collect(Collectors.toList());
@@ -170,15 +167,15 @@ public class RefTypesService {
                 .build();
     }
 
-    public static RefTransactionTypeResponse getAllRefTransactionTypes() {
+    public RefTransactionTypeResponse getAllRefTransactionTypes() {
         log.info("Before Get All Ref Transaction Types");
         List<RefTransactionType> refTransactionTypes = new ArrayList<>();
         Status status = null;
 
         try {
-            List<RefTransactionTypeDto> refTransactionTypeDtoList = RefTypesDao.getAllRefTransactionTypes();
+            List<RefTransactionTypeDto> refTransactionTypeDtoList = new RefTypesDao().getAllRefTransactionTypes();
             refTransactionTypes = refTransactionTypeDtoList.stream()
-                    .map(RefTypesService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(ref -> Util.hasText(ref.getId()))
                     .collect(Collectors.toList());

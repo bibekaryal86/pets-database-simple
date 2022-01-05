@@ -21,7 +21,7 @@ public class RefMerchantServletC extends HttpServlet {
         RefMerchantRequest refMerchantRequest = (RefMerchantRequest) Util.getRequestBody(request, RefMerchantRequest.class);
 
         if (refMerchantRequest != null) {
-            refMerchantResponse = RefMerchantService.saveNewRefMerchant(refMerchantRequest);
+            refMerchantResponse = new RefMerchantService().saveNewRefMerchant(refMerchantRequest);
 
             if (refMerchantResponse.getStatus() == null) {
                 response.setStatus(200);

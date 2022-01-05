@@ -21,7 +21,7 @@ public class TransactionServletC extends HttpServlet {
         TransactionRequest transactionRequest = (TransactionRequest) Util.getRequestBody(request, TransactionRequest.class);
 
         if (transactionRequest != null) {
-            transactionResponse = TransactionService.saveNewTransaction(transactionRequest);
+            transactionResponse = new TransactionService().saveNewTransaction(transactionRequest);
 
             if (transactionResponse.getStatus() == null) {
                 response.setStatus(200);

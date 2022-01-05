@@ -15,7 +15,7 @@ public class RefBankServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        RefBankResponse refBankResponse = RefTypesService.getAllRefBanks();
+        RefBankResponse refBankResponse = new RefTypesService().getAllRefBanks();
 
         if (refBankResponse.getStatus() == null) {
             response.setStatus(200);

@@ -4,15 +4,12 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import pets.database.app.model.*;
 import pets.database.app.util.MongoDbUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RefTypesDao {
 
     private static final String REF_ACCOUNT_TYPE_DETAILS = "ref_account_type_details";
@@ -21,7 +18,7 @@ public class RefTypesDao {
     private static final String REF_CATEGORY_DETAILS = "ref_category_details";
     private static final String REF_TRANSACTION_TYPE_DETAILS = "ref_transaction_type_details";
 
-    public static List<RefAccountTypeDto> getAllRefAccountTypes() {
+    public List<RefAccountTypeDto> getAllRefAccountTypes() {
         List<RefAccountTypeDto> accountTypeDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             MongoCollection<RefAccountTypeDto> mongoCollection = (MongoCollection<RefAccountTypeDto>)
@@ -32,7 +29,7 @@ public class RefTypesDao {
         return accountTypeDtoList;
     }
 
-    public static List<RefBankDto> getAllRefBanks() {
+    public List<RefBankDto> getAllRefBanks() {
         List<RefBankDto> refBankDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             MongoCollection<RefBankDto> mongoCollection = (MongoCollection<RefBankDto>)
@@ -43,7 +40,7 @@ public class RefTypesDao {
         return refBankDtoList;
     }
 
-    public static List<RefCategoryTypeDto> getAllRefCategoryTypes() {
+    public List<RefCategoryTypeDto> getAllRefCategoryTypes() {
         List<RefCategoryTypeDto> refCategoryTypeDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             MongoCollection<RefCategoryTypeDto> mongoCollection = (MongoCollection<RefCategoryTypeDto>)
@@ -54,7 +51,7 @@ public class RefTypesDao {
         return refCategoryTypeDtoList;
     }
 
-    public static List<RefCategoryDto> getAllRefCategories() {
+    public List<RefCategoryDto> getAllRefCategories() {
         List<RefCategoryDto> refCategoryDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             MongoCollection<RefCategoryDto> mongoCollection = (MongoCollection<RefCategoryDto>)
@@ -65,7 +62,7 @@ public class RefTypesDao {
         return refCategoryDtoList;
     }
 
-    public static List<RefTransactionTypeDto> getAllRefTransactionTypes() {
+    public List<RefTransactionTypeDto> getAllRefTransactionTypes() {
         List<RefTransactionTypeDto> refTransactionTypeDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             MongoCollection<RefTransactionTypeDto> mongoCollection = (MongoCollection<RefTransactionTypeDto>)

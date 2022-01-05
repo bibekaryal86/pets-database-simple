@@ -15,7 +15,7 @@ public class RefAccountTypeServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        RefAccountTypeResponse refAccountTypeResponse = RefTypesService.getAllRefAccountTypes();
+        RefAccountTypeResponse refAccountTypeResponse = new RefTypesService().getAllRefAccountTypes();
 
         if (refAccountTypeResponse.getStatus() == null) {
             response.setStatus(200);

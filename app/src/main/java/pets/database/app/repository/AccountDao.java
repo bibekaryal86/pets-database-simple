@@ -6,8 +6,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pets.database.app.model.AccountDto;
@@ -17,16 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountDao {
 
     private static final String ACCOUNT_DETAILS = "account_details";
 
-    private static MongoCollection<AccountDto> getMongoCollection(MongoClient mongoClient) {
+    private MongoCollection<AccountDto> getMongoCollection(MongoClient mongoClient) {
         return (MongoCollection<AccountDto>) MongoDbUtil.getMongoCollection(mongoClient, ACCOUNT_DETAILS, AccountDto.class);
     }
 
-    public static List<AccountDto> getAllAccountsByUsername(String username) {
+    public List<AccountDto> getAllAccountsByUsername(String username) {
         List<AccountDto> accountDtoList = new ArrayList<>();
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             FindIterable<AccountDto> findIterable = getMongoCollection(mongoClient)
@@ -37,26 +34,26 @@ public class AccountDao {
         return accountDtoList;
     }
 
-    public static AccountDto getAccountById(String id) {
+    public AccountDto getAccountById(String id) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return getMongoCollection(mongoClient).find(Filters.eq("_id", new ObjectId(id))).first();
         }
     }
 
-    public static String saveNewAccount(AccountDto accountDto) {
+    public String saveNewAccount(AccountDto accountDto) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return Objects.requireNonNull(getMongoCollection(mongoClient).insertOne(accountDto).getInsertedId())
                     .asObjectId().getValue().toString();
         }
     }
 
-    public static long updateAccountById(Bson filter, Bson updates) {
+    public long updateAccountById(Bson filter, Bson updates) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return getMongoCollection(mongoClient).updateOne(filter, updates).getModifiedCount();
         }
     }
 
-    public static long deleteAccountById(Bson filter) {
+    public long deleteAccountById(Bson filter) {
         try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
             return getMongoCollection(mongoClient).deleteOne(filter).getDeletedCount();
         }

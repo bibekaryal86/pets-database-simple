@@ -21,7 +21,7 @@ public class UserServletC extends HttpServlet {
         UserRequest userRequest = (UserRequest) Util.getRequestBody(request, UserRequest.class);
 
         if (userRequest != null) {
-            userResponse = UserService.saveNewUser(userRequest);
+            userResponse = new UserService().saveNewUser(userRequest);
 
             if (userResponse.getStatus() == null) {
                 response.setStatus(200);

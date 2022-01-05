@@ -2,8 +2,6 @@ package pets.database.app.service;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -21,7 +19,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountService {
 
     private static final String ERROR_RETRIEVING_ACCOUNT = "Error Retrieving Account, Please Try Again!!!";
@@ -29,7 +26,7 @@ public class AccountService {
     private static final String ERROR_UPDATING_ACCOUNT = "Error Updating Account, Please Try Again!!!";
     private static final String ERROR_DELETING_ACCOUNT = "Error Deleting Account, Please Try Again!!!";
 
-    private static Account convertDtoToObject(AccountDto accountDto) {
+    private Account convertDtoToObject(AccountDto accountDto) {
         return Account.builder()
                 .id(accountDto.getId() == null ? null : accountDto.getId().toString())
                 .refAccountType(RefAccountType.builder()
@@ -49,7 +46,7 @@ public class AccountService {
                 .build();
     }
 
-    private static AccountDto convertObjectToDto(AccountRequest accountRequest) {
+    private AccountDto convertObjectToDto(AccountRequest accountRequest) {
         return AccountDto.builder()
                 .refAccountType(RefAccountTypeDto.builder()
                         .id(new ObjectId(accountRequest.getTypeId()))
@@ -66,15 +63,15 @@ public class AccountService {
                 .build();
     }
 
-    public static AccountResponse getAllAccountsByUsername(String username) {
+    public AccountResponse getAllAccountsByUsername(String username) {
         log.info("Before Get All Accounts By Username: {}", username);
         List<Account> accounts = new ArrayList<>();
         Status status = null;
 
         try {
-            List<AccountDto> accountDtoList = AccountDao.getAllAccountsByUsername(username);
+            List<AccountDto> accountDtoList = new AccountDao().getAllAccountsByUsername(username);
             accounts = accountDtoList.stream()
-                    .map(AccountService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(account -> Util.hasText(account.getId()))
                     .collect(Collectors.toList());
@@ -93,13 +90,13 @@ public class AccountService {
                 .build();
     }
 
-    public static AccountResponse getAccountById(String id) {
+    public AccountResponse getAccountById(String id) {
         log.info("Before Get Account By Id: {}", id);
         Account account = null;
         Status status = null;
 
         try {
-            AccountDto accountDto = AccountDao.getAccountById(id);
+            AccountDto accountDto = new AccountDao().getAccountById(id);
             if (accountDto != null) {
                 account = convertDtoToObject(accountDto);
             }
@@ -118,7 +115,7 @@ public class AccountService {
                 .build();
     }
 
-    public static AccountResponse saveNewAccount(AccountRequest accountRequest) {
+    public AccountResponse saveNewAccount(AccountRequest accountRequest) {
         log.info("Before Save New Account: {}", accountRequest);
         Account account = null;
         Status status = null;
@@ -128,7 +125,7 @@ public class AccountService {
             accountDto.setCreationDate(LocalDate.now().toString());
             accountDto.setLastModified(LocalDateTime.now().toString());
 
-            String insertedId = AccountDao.saveNewAccount(accountDto);
+            String insertedId = new AccountDao().saveNewAccount(accountDto);
             if (Util.hasText(insertedId)) {
                 account = convertDtoToObject(accountDto);
                 account.setId(insertedId);
@@ -152,7 +149,7 @@ public class AccountService {
                 .build();
     }
 
-    public static AccountResponse updateAccountById(String id, AccountRequest accountRequest) {
+    public AccountResponse updateAccountById(String id, AccountRequest accountRequest) {
         log.info("Before Update Account By Id: {} | {}", id, accountRequest);
         AccountResponse accountResponse;
         Status status;
@@ -167,7 +164,7 @@ public class AccountService {
                     Updates.set("status", accountRequest.getStatus()),
                     Updates.set("lastModified", LocalDateTime.now().toString())));
 
-            long modifiedCount = AccountDao.updateAccountById(filter, updates);
+            long modifiedCount = new AccountDao().updateAccountById(filter, updates);
 
             if (modifiedCount > 0) {
                 accountResponse = getAccountById(id);
@@ -196,14 +193,14 @@ public class AccountService {
         return accountResponse;
     }
 
-    public static AccountResponse deleteAccountById(String id) {
+    public AccountResponse deleteAccountById(String id) {
         log.info("Before Delete Account By Id: {}", id);
         long deleteCount = 0;
         Status status = null;
 
         try {
             Bson filter = Filters.eq("_id", new ObjectId(id));
-            deleteCount = AccountDao.deleteAccountById(filter);
+            deleteCount = new AccountDao().deleteAccountById(filter);
         } catch (Exception ex) {
             log.error("Delete Account By Id: {}", id, ex);
             status = Status.builder()

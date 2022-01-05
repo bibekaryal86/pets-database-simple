@@ -22,7 +22,7 @@ public class UserServletUD extends HttpServlet {
 
         if (Util.hasText(id)) {
             if (isDelete) {
-                userResponse = UserService.deleteUserById(id);
+                userResponse = new UserService().deleteUserById(id);
             } else {
                 UserRequest userRequest = (UserRequest) Util.getRequestBody(request, UserRequest.class);
 
@@ -33,7 +33,7 @@ public class UserServletUD extends HttpServlet {
                                     .build())
                             .build();
                 } else {
-                    userResponse = UserService.updateUserById(id, userRequest);
+                    userResponse = new UserService().updateUserById(id, userRequest);
                 }
             }
 

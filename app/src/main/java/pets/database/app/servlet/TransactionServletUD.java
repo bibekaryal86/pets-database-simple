@@ -23,9 +23,9 @@ public class TransactionServletUD extends HttpServlet {
 
         if (Util.hasText(id)) {
             if (isGet) {
-                transactionResponse = TransactionService.getTransactionById(id);
+                transactionResponse = new TransactionService().getTransactionById(id);
             } else if (isDelete) {
-                transactionResponse = TransactionService.deleteTransactionById(id);
+                transactionResponse = new TransactionService().deleteTransactionById(id);
             } else {
                 TransactionRequest transactionRequest = (TransactionRequest) Util.getRequestBody(request, TransactionRequest.class);
 
@@ -36,7 +36,7 @@ public class TransactionServletUD extends HttpServlet {
                                     .build())
                             .build();
                 } else {
-                    transactionResponse = TransactionService.updateTransactionById(id, transactionRequest);
+                    transactionResponse = new TransactionService().updateTransactionById(id, transactionRequest);
                 }
             }
 

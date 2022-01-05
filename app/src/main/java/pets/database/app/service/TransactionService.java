@@ -2,8 +2,6 @@ package pets.database.app.service;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -21,7 +19,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TransactionService {
 
     private static final String ERROR_RETRIEVING_TRANSACTION = "Error Retrieving Transaction, Please Try Again!!!";
@@ -29,7 +26,7 @@ public class TransactionService {
     private static final String ERROR_UPDATING_TRANSACTION = "Error Updating Transaction, Please Try Again!!!";
     private static final String ERROR_DELETING_TRANSACTION = "Error Deleting Transaction, Please Try Again!!!";
 
-    private static Transaction convertDtoToObject(TransactionDto transactionDto) {
+    private Transaction convertDtoToObject(TransactionDto transactionDto) {
         return Transaction.builder()
                 .id(transactionDto.getId() == null ? null : transactionDto.getId().toString())
                 .description(transactionDto.getDescription())
@@ -60,7 +57,7 @@ public class TransactionService {
                 .build();
     }
 
-    private static TransactionDto convertObjectToDto(TransactionRequest transactionRequest) {
+    private TransactionDto convertObjectToDto(TransactionRequest transactionRequest) {
         return TransactionDto.builder()
                 .description(transactionRequest.getDescription())
                 .account(AccountDto.builder()
@@ -86,18 +83,17 @@ public class TransactionService {
                 .regular(transactionRequest.getRegular())
                 .necessary(transactionRequest.getNecessary())
                 .build();
-        // to builder trfAccount
     }
 
-    public static TransactionResponse getAllTransactionsByUsername(String username) {
+    public TransactionResponse getAllTransactionsByUsername(String username) {
         log.info("Before Get All Transactions By Username: {}", username);
         List<Transaction> transactions = new ArrayList<>();
         Status status = null;
 
         try {
-            List<TransactionDto> transactionDtoList = TransactionDao.getAllTransactionsByUsername(username);
+            List<TransactionDto> transactionDtoList = new TransactionDao().getAllTransactionsByUsername(username);
             transactions = transactionDtoList.stream()
-                    .map(TransactionService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(transaction -> Util.hasText(transaction.getId()))
                     .collect(Collectors.toList());
@@ -116,13 +112,13 @@ public class TransactionService {
                 .build();
     }
 
-    public static TransactionResponse getTransactionById(String id) {
+    public TransactionResponse getTransactionById(String id) {
         log.info("Before Get Transaction By Id: {}", id);
         Transaction transaction = null;
         Status status = null;
 
         try {
-            TransactionDto transactionDto = TransactionDao.getTransactionById(id);
+            TransactionDto transactionDto = new TransactionDao().getTransactionById(id);
             if (transactionDto != null) {
                 transaction = convertDtoToObject(transactionDto);
             }
@@ -141,7 +137,7 @@ public class TransactionService {
                 .build();
     }
 
-    public static TransactionResponse saveNewTransaction(TransactionRequest transactionRequest) {
+    public TransactionResponse saveNewTransaction(TransactionRequest transactionRequest) {
         log.info("Before Save New Transaction: {}", transactionRequest);
         Transaction transaction = null;
         Status status = null;
@@ -151,7 +147,7 @@ public class TransactionService {
             transactionDto.setCreationDate(LocalDate.now().toString());
             transactionDto.setLastModified(LocalDateTime.now().toString());
 
-            String insertedId = TransactionDao.saveNewTransaction(transactionDto);
+            String insertedId = new TransactionDao().saveNewTransaction(transactionDto);
             if (Util.hasText(insertedId)) {
                 transaction = convertDtoToObject(transactionDto);
                 transaction.setId(insertedId);
@@ -175,7 +171,7 @@ public class TransactionService {
                 .build();
     }
 
-    public static TransactionResponse updateTransactionById(String id, TransactionRequest transactionRequest) {
+    public TransactionResponse updateTransactionById(String id, TransactionRequest transactionRequest) {
         log.info("Before Update Transaction By Id: {} | {}", id, transactionRequest);
         TransactionResponse transactionResponse;
         Status status;
@@ -218,7 +214,7 @@ public class TransactionService {
             bsonList.add(Updates.set("lastModified", LocalDateTime.now().toString()));
 
             Bson updates = Updates.combine(bsonList);
-            long modifiedCount = TransactionDao.updateTransactionById(filter, updates);
+            long modifiedCount = new TransactionDao().updateTransactionById(filter, updates);
 
             if (modifiedCount > 0) {
                 transactionResponse = getTransactionById(id);
@@ -247,14 +243,14 @@ public class TransactionService {
         return transactionResponse;
     }
 
-    public static TransactionResponse deleteTransactionById(String id) {
+    public TransactionResponse deleteTransactionById(String id) {
         log.info("Before Delete Transaction By Id: {}", id);
         long deleteCount = 0;
         Status status = null;
 
         try {
             Bson filter = Filters.eq("_id", new ObjectId(id));
-            deleteCount = TransactionDao.deleteTransactionById(filter);
+            deleteCount = new TransactionDao().deleteTransactionById(filter);
         } catch (Exception ex) {
             log.error("Delete Transaction By Id: {}", id, ex);
             status = Status.builder()
@@ -271,14 +267,14 @@ public class TransactionService {
                 .build();
     }
 
-    public static TransactionResponse deleteTransactionByAccountId(String id) {
+    public TransactionResponse deleteTransactionByAccountId(String id) {
         log.info("Before Delete Transaction By Account Id: {}", id);
         long deleteCount = 0;
         Status status = null;
 
         try {
             Bson filter = Filters.eq("account._id", new ObjectId(id));
-            deleteCount = TransactionDao.deleteTransactionByAccountId(filter);
+            deleteCount = new TransactionDao().deleteTransactionByAccountId(filter);
         } catch (Exception ex) {
             log.error("Delete Transaction By Account Id: {}", id, ex);
             status = Status.builder()

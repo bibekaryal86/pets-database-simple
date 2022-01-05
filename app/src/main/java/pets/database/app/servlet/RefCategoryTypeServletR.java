@@ -15,7 +15,7 @@ public class RefCategoryTypeServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        RefCategoryTypeResponse refCategoryTypeResponse = RefTypesService.getAllRefCategoryTypes();
+        RefCategoryTypeResponse refCategoryTypeResponse = new RefTypesService().getAllRefCategoryTypes();
 
         if (refCategoryTypeResponse.getStatus() == null) {
             response.setStatus(200);

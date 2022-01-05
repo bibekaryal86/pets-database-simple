@@ -15,7 +15,7 @@ public class RefTransactionTypeServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        RefTransactionTypeResponse refTransactionTypeResponse = RefTypesService.getAllRefTransactionTypes();
+        RefTransactionTypeResponse refTransactionTypeResponse = new RefTypesService().getAllRefTransactionTypes();
 
         if (refTransactionTypeResponse.getStatus() == null) {
             response.setStatus(200);

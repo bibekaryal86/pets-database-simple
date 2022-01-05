@@ -23,9 +23,9 @@ public class RefMerchantServletUD extends HttpServlet {
 
         if (Util.hasText(id)) {
             if (isGet) {
-                refMerchantResponse = RefMerchantService.getRefMerchantById(id);
+                refMerchantResponse = new RefMerchantService().getRefMerchantById(id);
             } else if (isDelete) {
-                refMerchantResponse = RefMerchantService.deleteRefMerchantById(id);
+                refMerchantResponse = new RefMerchantService().deleteRefMerchantById(id);
             } else {
                 RefMerchantRequest refMerchantRequest = (RefMerchantRequest) Util.getRequestBody(request, RefMerchantRequest.class);
 
@@ -36,7 +36,7 @@ public class RefMerchantServletUD extends HttpServlet {
                                     .build())
                             .build();
                 } else {
-                    refMerchantResponse = RefMerchantService.updateRefMerchantById(id, refMerchantRequest);
+                    refMerchantResponse = new RefMerchantService().updateRefMerchantById(id, refMerchantRequest);
                 }
             }
 

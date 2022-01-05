@@ -2,8 +2,6 @@ package pets.database.app.service;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -20,7 +18,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RefMerchantService {
 
     private static final String ERROR_RETRIEVING_MERCHANT = "Error Retrieving Merchants, Please Try Again!!!";
@@ -28,7 +25,7 @@ public class RefMerchantService {
     private static final String ERROR_UPDATING_MERCHANT = "Error Updating Merchant, Please Try Again!!!";
     private static final String ERROR_DELETING_MERCHANT = "Error Deleting Merchant, Please Try Again!!!";
 
-    private static RefMerchant convertDtoToObject(RefMerchantDto refMerchantDto) {
+    private RefMerchant convertDtoToObject(RefMerchantDto refMerchantDto) {
         return RefMerchant.builder()
                 .id(refMerchantDto.getId() == null ? null : refMerchantDto.getId().toString())
                 .description(refMerchantDto.getDescription())
@@ -40,7 +37,7 @@ public class RefMerchantService {
                 .build();
     }
 
-    private static RefMerchantDto convertObjectToDto(RefMerchantRequest refMerchantRequest) {
+    private RefMerchantDto convertObjectToDto(RefMerchantRequest refMerchantRequest) {
         return RefMerchantDto.builder()
                 .description(refMerchantRequest.getDescription())
                 .user(UserDto.builder()
@@ -49,15 +46,15 @@ public class RefMerchantService {
                 .build();
     }
 
-    public static RefMerchantResponse getAllRefMerchantsByUsername(String username) {
+    public RefMerchantResponse getAllRefMerchantsByUsername(String username) {
         log.info("Before Get All Ref Merchants By Username: {}", username);
         List<RefMerchant> refMerchants = new ArrayList<>();
         Status status = null;
 
         try {
-            List<RefMerchantDto> refMerchantDtoList = RefMerchantDao.getAllRefMerchantsByUsername(username);
+            List<RefMerchantDto> refMerchantDtoList = new RefMerchantDao().getAllRefMerchantsByUsername(username);
             refMerchants = refMerchantDtoList.stream()
-                    .map(RefMerchantService::convertDtoToObject)
+                    .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
                     .filter(refMerchant -> Util.hasText(refMerchant.getId()))
                     .collect(Collectors.toList());
@@ -76,13 +73,13 @@ public class RefMerchantService {
                 .build();
     }
 
-    public static RefMerchantResponse getRefMerchantById(String id) {
+    public RefMerchantResponse getRefMerchantById(String id) {
         log.info("Before Get Ref Merchant By Id: {}", id);
         RefMerchant refMerchant = null;
         Status status = null;
 
         try {
-            RefMerchantDto refMerchantDto = RefMerchantDao.getRefMerchantById(id);
+            RefMerchantDto refMerchantDto = new RefMerchantDao().getRefMerchantById(id);
             if (refMerchantDto != null) {
                 refMerchant = convertDtoToObject(refMerchantDto);
             }
@@ -101,7 +98,7 @@ public class RefMerchantService {
                 .build();
     }
 
-    public static RefMerchantResponse saveNewRefMerchant(RefMerchantRequest refMerchantRequest) {
+    public RefMerchantResponse saveNewRefMerchant(RefMerchantRequest refMerchantRequest) {
         log.info("Before Save New Ref Merchant: {}", refMerchantRequest);
         RefMerchant refMerchant = null;
         Status status = null;
@@ -111,7 +108,7 @@ public class RefMerchantService {
             refMerchantDto.setCreationDate(LocalDate.now().toString());
             refMerchantDto.setLastModified(LocalDateTime.now().toString());
 
-            String insertedId = RefMerchantDao.saveNewRefMerchant(refMerchantDto);
+            String insertedId = new RefMerchantDao().saveNewRefMerchant(refMerchantDto);
             if (Util.hasText(insertedId)) {
                 refMerchant = convertDtoToObject(refMerchantDto);
                 refMerchant.setId(insertedId);
@@ -135,7 +132,7 @@ public class RefMerchantService {
                 .build();
     }
 
-    public static RefMerchantResponse updateRefMerchantById(String id, RefMerchantRequest refMerchantRequest) {
+    public RefMerchantResponse updateRefMerchantById(String id, RefMerchantRequest refMerchantRequest) {
         log.info("Before Update Ref Merchant By Id: {} | {}", id, refMerchantRequest);
         RefMerchantResponse refMerchantResponse;
         Status status;
@@ -146,7 +143,7 @@ public class RefMerchantService {
                     Updates.set("description", refMerchantRequest.getDescription()),
                     Updates.set("lastModified", LocalDateTime.now().toString())));
 
-            long modifiedCount = RefMerchantDao.updateRefMerchantById(filter, updates);
+            long modifiedCount = new RefMerchantDao().updateRefMerchantById(filter, updates);
 
             if (modifiedCount > 0) {
                 refMerchantResponse = getRefMerchantById(id);
@@ -175,14 +172,14 @@ public class RefMerchantService {
         return refMerchantResponse;
     }
 
-    public static RefMerchantResponse deleteRefMerchantById(String id) {
+    public RefMerchantResponse deleteRefMerchantById(String id) {
         log.info("Before Delete Ref Merchant By Id: {}", id);
         long deleteCount = 0;
         Status status = null;
 
         try {
             Bson filter = Filters.eq("_id", new ObjectId(id));
-            deleteCount = RefMerchantDao.deleteRefMerchantById(filter);
+            deleteCount = new RefMerchantDao().deleteRefMerchantById(filter);
         } catch (Exception ex) {
             log.error("Delete Ref Merchant By Id: {}", id, ex);
             status = Status.builder()

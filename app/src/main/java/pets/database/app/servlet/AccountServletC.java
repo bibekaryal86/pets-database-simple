@@ -21,7 +21,7 @@ public class AccountServletC extends HttpServlet {
         AccountRequest accountRequest = (AccountRequest) Util.getRequestBody(request, AccountRequest.class);
 
         if (accountRequest != null) {
-            accountResponse = AccountService.saveNewAccount(accountRequest);
+            accountResponse = new AccountService().saveNewAccount(accountRequest);
 
             if (accountResponse.getStatus() == null) {
                 response.setStatus(200);

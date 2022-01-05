@@ -20,7 +20,7 @@ public class RefMerchantServletR extends HttpServlet {
         String username = Util.getRequestPathParameter(request);
 
         if (Util.hasText(username)) {
-            refMerchantResponse = RefMerchantService.getAllRefMerchantsByUsername(username);
+            refMerchantResponse = new RefMerchantService().getAllRefMerchantsByUsername(username);
 
             if (refMerchantResponse.getStatus() == null) {
                 response.setStatus(200);

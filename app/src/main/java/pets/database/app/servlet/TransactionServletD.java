@@ -21,7 +21,7 @@ public class TransactionServletD extends HttpServlet {
         String accountId = Util.getRequestPathParameter(request);
 
         if (Util.hasText(accountId)) {
-            transactionResponse = TransactionService.deleteTransactionByAccountId(accountId);
+            transactionResponse = new TransactionService().deleteTransactionByAccountId(accountId);
 
             if (transactionResponse.getStatus() == null) {
                 response.setStatus(200);
