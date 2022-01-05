@@ -5,10 +5,12 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import pets.database.app.model.*;
-import pets.database.app.util.MongoDbUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static pets.database.app.util.MongoDbUtil.getMongoClientSettings;
+import static pets.database.app.util.MongoDbUtil.getMongoCollection;
 
 public class RefTypesDao {
 
@@ -20,9 +22,9 @@ public class RefTypesDao {
 
     public List<RefAccountTypeDto> getAllRefAccountTypes() {
         List<RefAccountTypeDto> accountTypeDtoList = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
+        try (MongoClient mongoClient = MongoClients.create(getMongoClientSettings())) {
             MongoCollection<RefAccountTypeDto> mongoCollection = (MongoCollection<RefAccountTypeDto>)
-                    MongoDbUtil.getMongoCollection(mongoClient, REF_ACCOUNT_TYPE_DETAILS, RefAccountTypeDto.class);
+                    getMongoCollection(mongoClient, REF_ACCOUNT_TYPE_DETAILS, RefAccountTypeDto.class);
             FindIterable<RefAccountTypeDto> findIterable = mongoCollection.find();
             findIterable.forEach(accountTypeDtoList::add);
         }
@@ -31,9 +33,9 @@ public class RefTypesDao {
 
     public List<RefBankDto> getAllRefBanks() {
         List<RefBankDto> refBankDtoList = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
+        try (MongoClient mongoClient = MongoClients.create(getMongoClientSettings())) {
             MongoCollection<RefBankDto> mongoCollection = (MongoCollection<RefBankDto>)
-                    MongoDbUtil.getMongoCollection(mongoClient, REF_BANK_DETAILS, RefBankDto.class);
+                    getMongoCollection(mongoClient, REF_BANK_DETAILS, RefBankDto.class);
             FindIterable<RefBankDto> findIterable = mongoCollection.find();
             findIterable.forEach(refBankDtoList::add);
         }
@@ -42,9 +44,9 @@ public class RefTypesDao {
 
     public List<RefCategoryTypeDto> getAllRefCategoryTypes() {
         List<RefCategoryTypeDto> refCategoryTypeDtoList = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
+        try (MongoClient mongoClient = MongoClients.create(getMongoClientSettings())) {
             MongoCollection<RefCategoryTypeDto> mongoCollection = (MongoCollection<RefCategoryTypeDto>)
-                    MongoDbUtil.getMongoCollection(mongoClient, REF_CATEGORY_TYPE_DETAILS, RefCategoryTypeDto.class);
+                    getMongoCollection(mongoClient, REF_CATEGORY_TYPE_DETAILS, RefCategoryTypeDto.class);
             FindIterable<RefCategoryTypeDto> findIterable = mongoCollection.find();
             findIterable.forEach(refCategoryTypeDtoList::add);
         }
@@ -53,9 +55,9 @@ public class RefTypesDao {
 
     public List<RefCategoryDto> getAllRefCategories() {
         List<RefCategoryDto> refCategoryDtoList = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
+        try (MongoClient mongoClient = MongoClients.create(getMongoClientSettings())) {
             MongoCollection<RefCategoryDto> mongoCollection = (MongoCollection<RefCategoryDto>)
-                    MongoDbUtil.getMongoCollection(mongoClient, REF_CATEGORY_DETAILS, RefCategoryDto.class);
+                    getMongoCollection(mongoClient, REF_CATEGORY_DETAILS, RefCategoryDto.class);
             FindIterable<RefCategoryDto> findIterable = mongoCollection.find();
             findIterable.forEach(refCategoryDtoList::add);
         }
@@ -64,9 +66,9 @@ public class RefTypesDao {
 
     public List<RefTransactionTypeDto> getAllRefTransactionTypes() {
         List<RefTransactionTypeDto> refTransactionTypeDtoList = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(MongoDbUtil.getMongoClientSettings())) {
+        try (MongoClient mongoClient = MongoClients.create(getMongoClientSettings())) {
             MongoCollection<RefTransactionTypeDto> mongoCollection = (MongoCollection<RefTransactionTypeDto>)
-                    MongoDbUtil.getMongoCollection(mongoClient, REF_TRANSACTION_TYPE_DETAILS, RefTransactionTypeDto.class);
+                    getMongoCollection(mongoClient, REF_TRANSACTION_TYPE_DETAILS, RefTransactionTypeDto.class);
             FindIterable<RefTransactionTypeDto> findIterable = mongoCollection.find();
             findIterable.forEach(refTransactionTypeDtoList::add);
         }

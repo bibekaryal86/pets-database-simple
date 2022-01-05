@@ -7,9 +7,11 @@ import pets.database.app.model.Status;
 import pets.database.app.model.UserRequest;
 import pets.database.app.model.UserResponse;
 import pets.database.app.service.UserService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.getGson;
+import static pets.database.app.util.Util.getRequestBody;
 
 public class UserServletC extends HttpServlet {
     @Override
@@ -18,7 +20,7 @@ public class UserServletC extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        UserRequest userRequest = (UserRequest) Util.getRequestBody(request, UserRequest.class);
+        UserRequest userRequest = (UserRequest) getRequestBody(request, UserRequest.class);
 
         if (userRequest != null) {
             userResponse = new UserService().saveNewUser(userRequest);
@@ -37,6 +39,6 @@ public class UserServletC extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(userResponse));
+        response.getWriter().print(getGson().toJson(userResponse));
     }
 }

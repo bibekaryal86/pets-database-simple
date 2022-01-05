@@ -7,16 +7,17 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pets.database.app.model.*;
 import pets.database.app.repository.AccountDao;
-import pets.database.app.util.Util;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
+import static pets.database.app.util.Util.hasText;
 
 @Slf4j
 public class AccountService {
@@ -73,8 +74,8 @@ public class AccountService {
             accounts = accountDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(account -> Util.hasText(account.getId()))
-                    .collect(Collectors.toList());
+                    .filter(account -> hasText(account.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Accounts By Username: {}", username, ex);
             status = Status.builder()
@@ -110,7 +111,7 @@ public class AccountService {
 
         log.info("After Get Account By Id: {}", account);
         return AccountResponse.builder()
-                .accounts(account == null ? Collections.emptyList() : List.of(account))
+                .accounts(account == null ? emptyList() : List.of(account))
                 .status(status)
                 .build();
     }
@@ -126,7 +127,7 @@ public class AccountService {
             accountDto.setLastModified(LocalDateTime.now().toString());
 
             String insertedId = new AccountDao().saveNewAccount(accountDto);
-            if (Util.hasText(insertedId)) {
+            if (hasText(insertedId)) {
                 account = convertDtoToObject(accountDto);
                 account.setId(insertedId);
             } else {
@@ -144,7 +145,7 @@ public class AccountService {
 
         log.info("After Save New Account: {}", account);
         return AccountResponse.builder()
-                .accounts(account == null ? Collections.emptyList() : List.of(account))
+                .accounts(account == null ? emptyList() : List.of(account))
                 .status(status)
                 .build();
     }
@@ -173,7 +174,7 @@ public class AccountService {
                         .errMsg(ERROR_UPDATING_ACCOUNT)
                         .build();
                 accountResponse = AccountResponse.builder()
-                        .accounts(Collections.emptyList())
+                        .accounts(emptyList())
                         .status(status)
                         .build();
             }
@@ -184,7 +185,7 @@ public class AccountService {
                     .message(ex.toString())
                     .build();
             accountResponse = AccountResponse.builder()
-                    .accounts(Collections.emptyList())
+                    .accounts(emptyList())
                     .status(status)
                     .build();
         }
@@ -211,7 +212,7 @@ public class AccountService {
 
         log.info("After Delete Account By Id: {} | deleteCount: {}", id, deleteCount);
         return AccountResponse.builder()
-                .accounts(Collections.emptyList())
+                .accounts(emptyList())
                 .deleteCount(deleteCount)
                 .status(status)
                 .build();

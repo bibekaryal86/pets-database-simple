@@ -7,12 +7,13 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pets.database.app.model.*;
 import pets.database.app.repository.UserDao;
-import pets.database.app.util.Util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static pets.database.app.util.Util.hasText;
 
 @Slf4j
 public class UserService {
@@ -77,7 +78,7 @@ public class UserService {
 
         log.info("After Get User By User Name: {} | {}", username, user);
         return UserResponse.builder()
-                .users(user == null ? Collections.emptyList() : List.of(user))
+                .users(user == null ? emptyList() : List.of(user))
                 .status(status)
                 .build();
     }
@@ -93,7 +94,7 @@ public class UserService {
             userDto.setLastModified(LocalDateTime.now().toString());
 
             String insertedId = new UserDao().saveNewUser(userDto);
-            if (Util.hasText(insertedId)) {
+            if (hasText(insertedId)) {
                 user = convertDtoToObject(userDto);
                 user.setId(insertedId);
             } else {
@@ -111,7 +112,7 @@ public class UserService {
 
         log.info("After Save New User: {}", user);
         return UserResponse.builder()
-                .users(user == null ? Collections.emptyList() : List.of(user))
+                .users(user == null ? emptyList() : List.of(user))
                 .status(status)
                 .build();
     }
@@ -145,7 +146,7 @@ public class UserService {
                         .errMsg(ERROR_UPDATING_USER)
                         .build();
                 userResponse = UserResponse.builder()
-                        .users(Collections.emptyList())
+                        .users(emptyList())
                         .status(status)
                         .build();
             }
@@ -156,7 +157,7 @@ public class UserService {
                     .message(ex.toString())
                     .build();
             userResponse = UserResponse.builder()
-                    .users(Collections.emptyList())
+                    .users(emptyList())
                     .status(status)
                     .build();
         }
@@ -183,7 +184,7 @@ public class UserService {
 
         log.info("After Delete User By Id: {} | deleteCount: {}", id, deleteCount);
         return UserResponse.builder()
-                .users(Collections.emptyList())
+                .users(emptyList())
                 .deleteCount(deleteCount)
                 .status(status)
                 .build();

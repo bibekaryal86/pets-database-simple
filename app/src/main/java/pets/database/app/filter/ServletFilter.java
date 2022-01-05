@@ -4,17 +4,19 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static pets.database.app.util.Util.CONTEXT_PATH;
+import static pets.database.app.util.Util.isAuthenticatedRequest;
+
 @Slf4j
 public class ServletFilter implements Filter {
 
     private static final String TRACE = "TRACE";
-    private static final List<String> DO_NOT_FILTER = List.of(Util.CONTEXT_PATH + "/tests/ping");
+    private static final List<String> DO_NOT_FILTER = List.of(CONTEXT_PATH + "/tests/ping");
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -27,7 +29,7 @@ public class ServletFilter implements Filter {
             logRequest(httpServletRequest);
 
             if (DO_NOT_FILTER.contains(httpServletRequest.getRequestURI()) ||
-                    Util.isAuthenticatedRequest(httpServletRequest)) {
+                    isAuthenticatedRequest(httpServletRequest)) {
                 chain.doFilter(request, response);
                 logResponse(httpServletRequest, httpServletResponse);
             } else {

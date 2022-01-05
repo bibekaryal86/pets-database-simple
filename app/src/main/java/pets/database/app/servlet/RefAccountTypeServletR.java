@@ -5,9 +5,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pets.database.app.model.RefAccountTypeResponse;
 import pets.database.app.service.RefTypesService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.getGson;
 
 public class RefAccountTypeServletR extends HttpServlet {
     @Override
@@ -23,6 +24,6 @@ public class RefAccountTypeServletR extends HttpServlet {
             response.setStatus(500);
         }
 
-        response.getWriter().print(Util.getGson().toJson(refAccountTypeResponse));
+        response.getWriter().print(getGson().toJson(refAccountTypeResponse));
     }
 }

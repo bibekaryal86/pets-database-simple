@@ -7,9 +7,10 @@ import pets.database.app.model.AccountRequest;
 import pets.database.app.model.AccountResponse;
 import pets.database.app.model.Status;
 import pets.database.app.service.AccountService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.*;
 
 public class AccountServletUD extends HttpServlet {
 
@@ -19,15 +20,15 @@ public class AccountServletUD extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String id = Util.getRequestPathParameter(request);
+        String id = getRequestPathParameter(request);
 
-        if (Util.hasText(id)) {
+        if (hasText(id)) {
             if (isGet) {
                 accountResponse = new AccountService().getAccountById(id);
             } else if (isDelete) {
                 accountResponse = new AccountService().deleteAccountById(id);
             } else {
-                AccountRequest accountRequest = (AccountRequest) Util.getRequestBody(request, AccountRequest.class);
+                AccountRequest accountRequest = (AccountRequest) getRequestBody(request, AccountRequest.class);
 
                 if (accountRequest == null) {
                     accountResponse = AccountResponse.builder()
@@ -54,7 +55,7 @@ public class AccountServletUD extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(accountResponse));
+        response.getWriter().print(getGson().toJson(accountResponse));
     }
 
     @Override

@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import pets.database.app.model.AccountResponse;
 import pets.database.app.model.Status;
 import pets.database.app.service.AccountService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.*;
 
 public class AccountServletR extends HttpServlet {
     @Override
@@ -17,9 +18,9 @@ public class AccountServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String username = Util.getRequestPathParameter(request);
+        String username = getRequestPathParameter(request);
 
-        if (Util.hasText(username)) {
+        if (hasText(username)) {
             accountResponse = new AccountService().getAllAccountsByUsername(username);
 
             if (accountResponse.getStatus() == null) {
@@ -37,6 +38,6 @@ public class AccountServletR extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(accountResponse));
+        response.getWriter().print(getGson().toJson(accountResponse));
     }
 }

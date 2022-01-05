@@ -7,16 +7,17 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pets.database.app.model.*;
 import pets.database.app.repository.TransactionDao;
-import pets.database.app.util.Util;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
+import static pets.database.app.util.Util.hasText;
 
 @Slf4j
 public class TransactionService {
@@ -63,7 +64,7 @@ public class TransactionService {
                 .account(AccountDto.builder()
                         .id(new ObjectId(transactionRequest.getAccountId()))
                         .build())
-                .trfAccount(!Util.hasText(transactionRequest.getTrfAccountId()) ? null : AccountDto.builder()
+                .trfAccount(!hasText(transactionRequest.getTrfAccountId()) ? null : AccountDto.builder()
                         .id(new ObjectId(transactionRequest.getTrfAccountId()))
                         .build())
                 .refTransactionType(RefTransactionTypeDto.builder()
@@ -95,8 +96,8 @@ public class TransactionService {
             transactions = transactionDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(transaction -> Util.hasText(transaction.getId()))
-                    .collect(Collectors.toList());
+                    .filter(transaction -> hasText(transaction.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Transactions By Username: {}", username, ex);
             status = Status.builder()
@@ -132,7 +133,7 @@ public class TransactionService {
 
         log.info("After Get Transaction By Id: {}", transaction);
         return TransactionResponse.builder()
-                .transactions(transaction == null ? Collections.emptyList() : List.of(transaction))
+                .transactions(transaction == null ? emptyList() : List.of(transaction))
                 .status(status)
                 .build();
     }
@@ -148,7 +149,7 @@ public class TransactionService {
             transactionDto.setLastModified(LocalDateTime.now().toString());
 
             String insertedId = new TransactionDao().saveNewTransaction(transactionDto);
-            if (Util.hasText(insertedId)) {
+            if (hasText(insertedId)) {
                 transaction = convertDtoToObject(transactionDto);
                 transaction.setId(insertedId);
             } else {
@@ -166,7 +167,7 @@ public class TransactionService {
 
         log.info("After Save New Transaction: {}", transaction);
         return TransactionResponse.builder()
-                .transactions(transaction == null ? Collections.emptyList() : List.of(transaction))
+                .transactions(transaction == null ? emptyList() : List.of(transaction))
                 .status(status)
                 .build();
     }
@@ -180,31 +181,31 @@ public class TransactionService {
             Bson filter = Filters.eq("_id", new ObjectId(id));
             List<Bson> bsonList = new ArrayList<>();
 
-            if (Util.hasText(transactionRequest.getDescription())) {
+            if (hasText(transactionRequest.getDescription())) {
                 bsonList.add(Updates.set("description", transactionRequest.getDescription()));
             }
 
-            if (Util.hasText(transactionRequest.getAccountId())) {
+            if (hasText(transactionRequest.getAccountId())) {
                 bsonList.add(Updates.set("account._id", new ObjectId(transactionRequest.getAccountId())));
             }
 
-            if (Util.hasText(transactionRequest.getTrfAccountId())) {
+            if (hasText(transactionRequest.getTrfAccountId())) {
                 bsonList.add(Updates.set("trfAccount._id", new ObjectId(transactionRequest.getTrfAccountId())));
             }
 
-            if (Util.hasText(transactionRequest.getTypeId())) {
+            if (hasText(transactionRequest.getTypeId())) {
                 bsonList.add(Updates.set("refTransactionType._id", new ObjectId(transactionRequest.getTypeId())));
             }
 
-            if (Util.hasText(transactionRequest.getCategoryId())) {
+            if (hasText(transactionRequest.getCategoryId())) {
                 bsonList.add(Updates.set("refCategory._id", new ObjectId(transactionRequest.getCategoryId())));
             }
 
-            if (Util.hasText(transactionRequest.getMerchantId())) {
+            if (hasText(transactionRequest.getMerchantId())) {
                 bsonList.add(Updates.set("refMerchant._id", new ObjectId(transactionRequest.getMerchantId())));
             }
 
-            if (Util.hasText(transactionRequest.getDate())) {
+            if (hasText(transactionRequest.getDate())) {
                 bsonList.add(Updates.set("date", transactionRequest.getDate()));
             }
 
@@ -223,7 +224,7 @@ public class TransactionService {
                         .errMsg(ERROR_UPDATING_TRANSACTION)
                         .build();
                 transactionResponse = TransactionResponse.builder()
-                        .transactions(Collections.emptyList())
+                        .transactions(emptyList())
                         .status(status)
                         .build();
             }
@@ -234,7 +235,7 @@ public class TransactionService {
                     .message(ex.toString())
                     .build();
             transactionResponse = TransactionResponse.builder()
-                    .transactions(Collections.emptyList())
+                    .transactions(emptyList())
                     .status(status)
                     .build();
         }
@@ -261,7 +262,7 @@ public class TransactionService {
 
         log.info("After Delete Transaction By Id: {} | deleteCount: {}", id, deleteCount);
         return TransactionResponse.builder()
-                .transactions(Collections.emptyList())
+                .transactions(emptyList())
                 .deleteCount(deleteCount)
                 .status(status)
                 .build();
@@ -285,7 +286,7 @@ public class TransactionService {
 
         log.info("After Delete Transaction By Account Id: {} | deleteCount: {}", id, deleteCount);
         return TransactionResponse.builder()
-                .transactions(Collections.emptyList())
+                .transactions(emptyList())
                 .deleteCount(deleteCount)
                 .status(status)
                 .build();

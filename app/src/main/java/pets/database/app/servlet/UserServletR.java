@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import pets.database.app.model.Status;
 import pets.database.app.model.UserResponse;
 import pets.database.app.service.UserService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.*;
 
 public class UserServletR extends HttpServlet {
     @Override
@@ -17,10 +18,10 @@ public class UserServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String username = Util.getRequestPathParameter(request);
+        String username = getRequestPathParameter(request);
         String usernameHeader = request.getHeader("user-header");
 
-        if (Util.hasText(username) && Util.hasText(usernameHeader) && username.equals(usernameHeader)) {
+        if (hasText(username) && hasText(usernameHeader) && username.equals(usernameHeader)) {
             userResponse = new UserService().getUserByUsername(username);
 
             if (userResponse.getStatus() == null) {
@@ -38,6 +39,6 @@ public class UserServletR extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(userResponse));
+        response.getWriter().print(getGson().toJson(userResponse));
     }
 }

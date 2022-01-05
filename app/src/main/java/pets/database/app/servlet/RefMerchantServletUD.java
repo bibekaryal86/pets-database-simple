@@ -7,9 +7,10 @@ import pets.database.app.model.RefMerchantRequest;
 import pets.database.app.model.RefMerchantResponse;
 import pets.database.app.model.Status;
 import pets.database.app.service.RefMerchantService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.*;
 
 public class RefMerchantServletUD extends HttpServlet {
 
@@ -19,15 +20,15 @@ public class RefMerchantServletUD extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String id = Util.getRequestPathParameter(request);
+        String id = getRequestPathParameter(request);
 
-        if (Util.hasText(id)) {
+        if (hasText(id)) {
             if (isGet) {
                 refMerchantResponse = new RefMerchantService().getRefMerchantById(id);
             } else if (isDelete) {
                 refMerchantResponse = new RefMerchantService().deleteRefMerchantById(id);
             } else {
-                RefMerchantRequest refMerchantRequest = (RefMerchantRequest) Util.getRequestBody(request, RefMerchantRequest.class);
+                RefMerchantRequest refMerchantRequest = (RefMerchantRequest) getRequestBody(request, RefMerchantRequest.class);
 
                 if (refMerchantRequest == null) {
                     refMerchantResponse = RefMerchantResponse.builder()
@@ -54,7 +55,7 @@ public class RefMerchantServletUD extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(refMerchantResponse));
+        response.getWriter().print(getGson().toJson(refMerchantResponse));
     }
 
     @Override

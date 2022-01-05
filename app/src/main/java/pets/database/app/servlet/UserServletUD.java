@@ -7,9 +7,10 @@ import pets.database.app.model.Status;
 import pets.database.app.model.UserRequest;
 import pets.database.app.model.UserResponse;
 import pets.database.app.service.UserService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.*;
 
 public class UserServletUD extends HttpServlet {
 
@@ -18,13 +19,13 @@ public class UserServletUD extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String id = Util.getRequestPathParameter(request);
+        String id = getRequestPathParameter(request);
 
-        if (Util.hasText(id)) {
+        if (hasText(id)) {
             if (isDelete) {
                 userResponse = new UserService().deleteUserById(id);
             } else {
-                UserRequest userRequest = (UserRequest) Util.getRequestBody(request, UserRequest.class);
+                UserRequest userRequest = (UserRequest) getRequestBody(request, UserRequest.class);
 
                 if (userRequest == null) {
                     userResponse = UserResponse.builder()
@@ -51,7 +52,7 @@ public class UserServletUD extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(userResponse));
+        response.getWriter().print(getGson().toJson(userResponse));
     }
 
     @Override

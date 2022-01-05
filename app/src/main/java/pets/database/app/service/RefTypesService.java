@@ -3,12 +3,13 @@ package pets.database.app.service;
 import lombok.extern.slf4j.Slf4j;
 import pets.database.app.model.*;
 import pets.database.app.repository.RefTypesDao;
-import pets.database.app.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static pets.database.app.util.Util.hasText;
 
 @Slf4j
 public class RefTypesService {
@@ -69,8 +70,8 @@ public class RefTypesService {
             refAccountTypes = accountTypeDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(ref -> Util.hasText(ref.getId()))
-                    .collect(Collectors.toList());
+                    .filter(ref -> hasText(ref.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Ref Account Types", ex);
             status = Status.builder()
@@ -96,8 +97,8 @@ public class RefTypesService {
             refBanks = refBankDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(ref -> Util.hasText(ref.getId()))
-                    .collect(Collectors.toList());
+                    .filter(ref -> hasText(ref.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Ref Banks", ex);
             status = Status.builder()
@@ -123,8 +124,8 @@ public class RefTypesService {
             refCategoryTypes = refCategoryTypeDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(ref -> Util.hasText(ref.getId()))
-                    .collect(Collectors.toList());
+                    .filter(ref -> hasText(ref.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Ref Category Types", ex);
             status = Status.builder()
@@ -150,8 +151,8 @@ public class RefTypesService {
             refCategories = refCategoryDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(ref -> Util.hasText(ref.getId()))
-                    .collect(Collectors.toList());
+                    .filter(ref -> hasText(ref.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Ref Categories", ex);
             status = Status.builder()
@@ -177,8 +178,8 @@ public class RefTypesService {
             refTransactionTypes = refTransactionTypeDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(ref -> Util.hasText(ref.getId()))
-                    .collect(Collectors.toList());
+                    .filter(ref -> hasText(ref.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Ref Transaction Types", ex);
             status = Status.builder()

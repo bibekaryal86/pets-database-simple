@@ -7,15 +7,16 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pets.database.app.model.*;
 import pets.database.app.repository.RefMerchantDao;
-import pets.database.app.util.Util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
+import static pets.database.app.util.Util.hasText;
 
 @Slf4j
 public class RefMerchantService {
@@ -56,8 +57,8 @@ public class RefMerchantService {
             refMerchants = refMerchantDtoList.stream()
                     .map(this::convertDtoToObject)
                     .filter(Objects::nonNull)
-                    .filter(refMerchant -> Util.hasText(refMerchant.getId()))
-                    .collect(Collectors.toList());
+                    .filter(refMerchant -> hasText(refMerchant.getId()))
+                    .collect(toList());
         } catch (Exception ex) {
             log.error("Get All Ref Merchants By Username: {}", username, ex);
             status = Status.builder()
@@ -93,7 +94,7 @@ public class RefMerchantService {
 
         log.info("After Get Ref Merchant By Id: {}", refMerchant);
         return RefMerchantResponse.builder()
-                .refMerchants(refMerchant == null ? Collections.emptyList() : List.of(refMerchant))
+                .refMerchants(refMerchant == null ? emptyList() : List.of(refMerchant))
                 .status(status)
                 .build();
     }
@@ -109,7 +110,7 @@ public class RefMerchantService {
             refMerchantDto.setLastModified(LocalDateTime.now().toString());
 
             String insertedId = new RefMerchantDao().saveNewRefMerchant(refMerchantDto);
-            if (Util.hasText(insertedId)) {
+            if (hasText(insertedId)) {
                 refMerchant = convertDtoToObject(refMerchantDto);
                 refMerchant.setId(insertedId);
             } else {
@@ -127,7 +128,7 @@ public class RefMerchantService {
 
         log.info("After Save New Ref Merchant: {}", refMerchant);
         return RefMerchantResponse.builder()
-                .refMerchants(refMerchant == null ? Collections.emptyList() : List.of(refMerchant))
+                .refMerchants(refMerchant == null ? emptyList() : List.of(refMerchant))
                 .status(status)
                 .build();
     }
@@ -152,7 +153,7 @@ public class RefMerchantService {
                         .errMsg(ERROR_UPDATING_MERCHANT)
                         .build();
                 refMerchantResponse = RefMerchantResponse.builder()
-                        .refMerchants(Collections.emptyList())
+                        .refMerchants(emptyList())
                         .status(status)
                         .build();
             }
@@ -163,7 +164,7 @@ public class RefMerchantService {
                     .message(ex.toString())
                     .build();
             refMerchantResponse = RefMerchantResponse.builder()
-                    .refMerchants(Collections.emptyList())
+                    .refMerchants(emptyList())
                     .status(status)
                     .build();
         }
@@ -190,7 +191,7 @@ public class RefMerchantService {
 
         log.info("After Delete Ref Merchant By Id: {} | deleteCount: {}", id, deleteCount);
         return RefMerchantResponse.builder()
-                .refMerchants(Collections.emptyList())
+                .refMerchants(emptyList())
                 .deleteCount(deleteCount)
                 .status(status)
                 .build();

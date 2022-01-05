@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import static pets.database.app.util.Util.*;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MongoDbUtil {
 
@@ -18,9 +20,9 @@ public class MongoDbUtil {
 
     private static void initMongo() {
         if (dbName == null || dbUsr == null || dbPwd == null) {
-            dbName = Util.getSystemEnvProperty(Util.MONGODB_ACC_NAME);
-            dbUsr = Util.getSystemEnvProperty(Util.MONGODB_USR_NAME);
-            dbPwd = Util.getSystemEnvProperty(Util.MONGODB_USR_PWD);
+            dbName = getSystemEnvProperty(MONGODB_ACC_NAME);
+            dbUsr = getSystemEnvProperty(MONGODB_USR_NAME);
+            dbPwd = getSystemEnvProperty(MONGODB_USR_PWD);
         }
     }
 
@@ -28,7 +30,7 @@ public class MongoDbUtil {
         initMongo();
 
         return MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(String.format(Util.MONGODB_URI, dbUsr, dbPwd, dbName)))
+                .applyConnectionString(new ConnectionString(String.format(MONGODB_URI, dbUsr, dbPwd, dbName)))
                 .codecRegistry(CodecRegistries.fromRegistries(
                         MongoClientSettings.getDefaultCodecRegistry(),
                         CodecRegistries.fromProviders(PojoCodecProvider.builder()

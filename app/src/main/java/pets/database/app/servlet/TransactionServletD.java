@@ -10,6 +10,8 @@ import pets.database.app.util.Util;
 
 import java.io.IOException;
 
+import static pets.database.app.util.Util.*;
+
 public class TransactionServletD extends HttpServlet {
 
     @Override
@@ -18,9 +20,9 @@ public class TransactionServletD extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String accountId = Util.getRequestPathParameter(request);
+        String accountId = getRequestPathParameter(request);
 
-        if (Util.hasText(accountId)) {
+        if (hasText(accountId)) {
             transactionResponse = new TransactionService().deleteTransactionByAccountId(accountId);
 
             if (transactionResponse.getStatus() == null) {
@@ -37,6 +39,6 @@ public class TransactionServletD extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(transactionResponse));
+        response.getWriter().print(getGson().toJson(transactionResponse));
     }
 }

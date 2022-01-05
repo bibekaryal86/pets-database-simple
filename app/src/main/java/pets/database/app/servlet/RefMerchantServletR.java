@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import pets.database.app.model.RefMerchantResponse;
 import pets.database.app.model.Status;
 import pets.database.app.service.RefMerchantService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.*;
 
 public class RefMerchantServletR extends HttpServlet {
     @Override
@@ -17,9 +18,9 @@ public class RefMerchantServletR extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        String username = Util.getRequestPathParameter(request);
+        String username = getRequestPathParameter(request);
 
-        if (Util.hasText(username)) {
+        if (hasText(username)) {
             refMerchantResponse = new RefMerchantService().getAllRefMerchantsByUsername(username);
 
             if (refMerchantResponse.getStatus() == null) {
@@ -37,6 +38,6 @@ public class RefMerchantServletR extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(refMerchantResponse));
+        response.getWriter().print(getGson().toJson(refMerchantResponse));
     }
 }

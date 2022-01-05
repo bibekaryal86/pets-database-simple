@@ -7,9 +7,11 @@ import pets.database.app.model.RefMerchantRequest;
 import pets.database.app.model.RefMerchantResponse;
 import pets.database.app.model.Status;
 import pets.database.app.service.RefMerchantService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.getGson;
+import static pets.database.app.util.Util.getRequestBody;
 
 public class RefMerchantServletC extends HttpServlet {
     @Override
@@ -18,7 +20,7 @@ public class RefMerchantServletC extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        RefMerchantRequest refMerchantRequest = (RefMerchantRequest) Util.getRequestBody(request, RefMerchantRequest.class);
+        RefMerchantRequest refMerchantRequest = (RefMerchantRequest) getRequestBody(request, RefMerchantRequest.class);
 
         if (refMerchantRequest != null) {
             refMerchantResponse = new RefMerchantService().saveNewRefMerchant(refMerchantRequest);
@@ -37,6 +39,6 @@ public class RefMerchantServletC extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(refMerchantResponse));
+        response.getWriter().print(getGson().toJson(refMerchantResponse));
     }
 }

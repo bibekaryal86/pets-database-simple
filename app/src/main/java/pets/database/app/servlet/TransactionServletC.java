@@ -7,9 +7,11 @@ import pets.database.app.model.Status;
 import pets.database.app.model.TransactionRequest;
 import pets.database.app.model.TransactionResponse;
 import pets.database.app.service.TransactionService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
+
+import static pets.database.app.util.Util.getGson;
+import static pets.database.app.util.Util.getRequestBody;
 
 public class TransactionServletC extends HttpServlet {
     @Override
@@ -18,7 +20,7 @@ public class TransactionServletC extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
 
-        TransactionRequest transactionRequest = (TransactionRequest) Util.getRequestBody(request, TransactionRequest.class);
+        TransactionRequest transactionRequest = (TransactionRequest) getRequestBody(request, TransactionRequest.class);
 
         if (transactionRequest != null) {
             transactionResponse = new TransactionService().saveNewTransaction(transactionRequest);
@@ -37,6 +39,6 @@ public class TransactionServletC extends HttpServlet {
                     .build();
         }
 
-        response.getWriter().print(Util.getGson().toJson(transactionResponse));
+        response.getWriter().print(getGson().toJson(transactionResponse));
     }
 }

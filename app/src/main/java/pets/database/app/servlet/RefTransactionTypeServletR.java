@@ -9,6 +9,8 @@ import pets.database.app.util.Util;
 
 import java.io.IOException;
 
+import static pets.database.app.util.Util.getGson;
+
 public class RefTransactionTypeServletR extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -23,6 +25,6 @@ public class RefTransactionTypeServletR extends HttpServlet {
             response.setStatus(500);
         }
 
-        response.getWriter().print(Util.getGson().toJson(refTransactionTypeResponse));
+        response.getWriter().print(getGson().toJson(refTransactionTypeResponse));
     }
 }
