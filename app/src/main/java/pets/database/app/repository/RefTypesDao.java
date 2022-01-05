@@ -4,7 +4,11 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import pets.database.app.model.*;
+import pets.database.app.model.RefAccountTypeDto;
+import pets.database.app.model.RefBankDto;
+import pets.database.app.model.RefCategoryDto;
+import pets.database.app.model.RefCategoryTypeDto;
+import pets.database.app.model.RefTransactionTypeDto;
 
 import java.util.ArrayList;
 import java.util.List;

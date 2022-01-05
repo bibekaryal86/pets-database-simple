@@ -6,11 +6,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import pets.database.app.model.Status;
 import pets.database.app.model.TransactionResponse;
 import pets.database.app.service.TransactionService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
 
-import static pets.database.app.util.Util.*;
+import static pets.database.app.util.Util.getGson;
+import static pets.database.app.util.Util.getRequestPathParameter;
+import static pets.database.app.util.Util.hasText;
 
 public class TransactionServletD extends HttpServlet {
 

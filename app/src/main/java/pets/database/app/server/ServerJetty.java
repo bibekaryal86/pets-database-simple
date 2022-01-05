@@ -7,11 +7,34 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import pets.database.app.filter.ServletFilter;
-import pets.database.app.servlet.*;
+import pets.database.app.servlet.AccountServletC;
+import pets.database.app.servlet.AccountServletR;
+import pets.database.app.servlet.AccountServletUD;
+import pets.database.app.servlet.AppPing;
+import pets.database.app.servlet.RefAccountTypeServletR;
+import pets.database.app.servlet.RefBankServletR;
+import pets.database.app.servlet.RefCategoryServletR;
+import pets.database.app.servlet.RefCategoryTypeServletR;
+import pets.database.app.servlet.RefMerchantServletC;
+import pets.database.app.servlet.RefMerchantServletR;
+import pets.database.app.servlet.RefMerchantServletUD;
+import pets.database.app.servlet.RefTransactionTypeServletR;
+import pets.database.app.servlet.TransactionServletC;
+import pets.database.app.servlet.TransactionServletD;
+import pets.database.app.servlet.TransactionServletR;
+import pets.database.app.servlet.TransactionServletUD;
+import pets.database.app.servlet.UserServletC;
+import pets.database.app.servlet.UserServletR;
+import pets.database.app.servlet.UserServletUD;
 
 import java.util.EnumSet;
 
-import static pets.database.app.util.Util.*;
+import static pets.database.app.util.Util.CONTEXT_PATH;
+import static pets.database.app.util.Util.SERVER_IDLE_TIMEOUT;
+import static pets.database.app.util.Util.SERVER_MAX_THREADS;
+import static pets.database.app.util.Util.SERVER_MIN_THREADS;
+import static pets.database.app.util.Util.SERVER_PORT;
+import static pets.database.app.util.Util.getSystemEnvProperty;
 
 public class ServerJetty {
 

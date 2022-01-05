@@ -5,7 +5,13 @@ import com.mongodb.client.model.Updates;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import pets.database.app.model.*;
+import pets.database.app.model.RefMerchant;
+import pets.database.app.model.RefMerchantDto;
+import pets.database.app.model.RefMerchantRequest;
+import pets.database.app.model.RefMerchantResponse;
+import pets.database.app.model.Status;
+import pets.database.app.model.User;
+import pets.database.app.model.UserDto;
 import pets.database.app.repository.RefMerchantDao;
 
 import java.time.LocalDate;

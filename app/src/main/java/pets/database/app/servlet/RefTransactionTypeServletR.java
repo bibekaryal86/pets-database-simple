@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pets.database.app.model.RefTransactionTypeResponse;
 import pets.database.app.service.RefTypesService;
-import pets.database.app.util.Util;
 
 import java.io.IOException;
 

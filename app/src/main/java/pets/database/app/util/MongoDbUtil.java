@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
-import static pets.database.app.util.Util.*;
+import static pets.database.app.util.Util.MONGODB_ACC_NAME;
+import static pets.database.app.util.Util.MONGODB_URI;
+import static pets.database.app.util.Util.MONGODB_USR_NAME;
+import static pets.database.app.util.Util.MONGODB_USR_PWD;
+import static pets.database.app.util.Util.getSystemEnvProperty;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MongoDbUtil {
