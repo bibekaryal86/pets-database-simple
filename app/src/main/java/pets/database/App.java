@@ -9,8 +9,8 @@ import pets.database.app.server.ServerJetty;
 @Slf4j
 public class App {
     public static void main(String[] args) throws Exception {
-        log.info("Begin pets-database-layer-simple initialization...");
+        log.info("Begin pets-database-simple initialization...");
         new ServerJetty().start();
-        log.info("End pets-database-layer-simple initialization...");
+        log.info("End pets-database-simple initialization...");
     }
 }
