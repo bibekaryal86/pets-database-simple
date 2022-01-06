@@ -1,5 +1,7 @@
 # pets-database-layer-simple
 
+* Main Repo: https://github.com/bibekaryal86/pets-database-layer
+
 This is a simple app which provides the logic for database CRUD actions. This app is a scaled down version
 of `pets-database-layer` app found here: https://github.com/bibekaryal86/pets-database-layer. The other app uses Spring
 Boot with MongoTemplate framework to do the exact same function as this app - `pets-database-layer-simple`. However,
